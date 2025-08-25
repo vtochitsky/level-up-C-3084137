@@ -1,0 +1,15 @@
+Prompt for input
+Output the sequence
+Output the sequence length
+
+./hailstone
+Enter the starting value: 18
+Hailstone sequence: 18, 9, 28, 14, 7, 22, ... , 1
+Sequence length: 21
+
+A positive integer, n
+If n equals 1, the sequence is over
+if n is even, then next value is n/2  - the next value is half
+if n is odd, the next value is (n*3)+1 - the next value is 3 times plus one
+Eventually this sequence terminate with n==1
+
