@@ -6,7 +6,8 @@ void making_change(float amount, int *quarters, int *dimes, int *nickels, int *p
 
 int main(void)
 {
-	const float amount[] = {0.49f, 1.27f, 0.75f, 1.31f, 0.83f};
+	const float amount[] = {0.49f, 1.27f, 0.75f, 1.31f, 0.83f, 0.98f};
+	// from video: 0.98 cents === 3 quarters, 2 dimes, 3 pennies
 
 	size_t i;
 
