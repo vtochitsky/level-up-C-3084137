@@ -41,11 +41,11 @@ int main()
 			nickels++;
 		}
 
-		printf("penny %.8f\n", penny);
+		// printf("penny %.8f\n", penny);
 		while (test_value >= penny)
 		{
 			test_value -= penny;
-			printf("p %.8f\n", test_value);
+			// printf("p %.8f\n", test_value);
 			pennies++;
 		}
 
