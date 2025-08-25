@@ -28,7 +28,23 @@ int main(void)
 	return 0;
 }
 
-#define EPSILON FLT_EPSILON
+// #define EPSILON FLT_EPSILON
+#define EPSILON 0.001f
+
+static int get_coins(float *amount, const float coin_amount)
+{
+	int coins = 0;
+
+	/* Treat 'amount' as greater than or approximately equal to 'coin_amount' */
+	// Treat A as greater than     or  approximately equal to B
+	while ((*amount) > coin_amount || fabsf((*amount) - coin_amount) < EPSILON)
+	{
+		(*amount) -= coin_amount;
+		coins++;
+	}
+
+	return coins;
+}
 
 void making_change(float amount, int *quarters, int *dimes, int *nickels, int *pennies)
 {
@@ -37,31 +53,8 @@ void making_change(float amount, int *quarters, int *dimes, int *nickels, int *p
 	const float nickel = 0.05f;
 	const float penny = 0.01f;
 
-	/* Treat 'amount' as greater than or approximately equal to 'quarter' */
-	while (amount > quarter || fabsf(amount - quarter) < EPSILON)
-	{
-		amount -= quarter;
-		(*quarters)++;
-	}
-	
-	/* Treat 'amount' as greater than or approximately equal to 'quarter' */
-	while (amount > dime || fabsf(amount - dime) < EPSILON)
-	{
-		amount -= dime;
-		(*dimes)++;
-	}
-
-	/* Treat 'amount' as greater than or approximately equal to 'quarter' */
-	while (amount > nickel || fabsf(amount - nickel) < EPSILON)
-	{
-		amount -= nickel;
-		(*nickels)++;
-	}
-
-	/* Treat 'amount' as greater than or approximately equal to 'quarter' */
-	while (amount > penny || fabsf(amount - penny) < EPSILON)
-	{
-		amount -= penny;
-		(*pennies)++;
-	}
+	*quarters = get_coins(&amount, quarter);
+	*dimes = get_coins(&amount, dime);
+	*nickels = get_coins(&amount, nickel);
+	*pennies = get_coins(&amount, penny);
 }
