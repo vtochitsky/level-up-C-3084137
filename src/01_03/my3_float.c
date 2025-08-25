@@ -58,3 +58,5 @@ void making_change(float amount, int *quarters, int *dimes, int *nickels, int *p
 	*nickels = get_coins(&amount, nickel);
 	*pennies = get_coins(&amount, penny);
 }
+
+// difference = minuend - subtrahend
