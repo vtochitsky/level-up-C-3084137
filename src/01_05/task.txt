@@ -1,0 +1,8 @@
+A perfect shuffle occurs when the second half of a deck of cards is evenly interspliced with the first half, 
+but it doesn't stop there. 
+You can continue the process taking the second half of the deck and evenly intersplicing it with the first. 
+According to the brainiacs, this process eventually returns the deck to its original order. 
+
+Your challenge is to code a perfect shuffle routine. 
+Rather than simulate a deck of cards shuffle a character array of 26 uppercase letters of the alphabet. 
+Your code then outputs the number of perfect shuffles required to restore the array back to its original order. 
