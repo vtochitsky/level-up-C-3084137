@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h> /* for memcpy_s */
+#include <assert.h> /* for assert */
 
 const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                               'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
@@ -77,5 +78,24 @@ int compare_decks(const char *deck1, const char *deck2, const size_t length)
 
 void perfect_shuffle(char *deck, const size_t length)
 {
-  // TODO: implement me
+  assert(length > 0);
+
+  const size_t half = length / 2;
+  char buffer[length]; // VLA
+
+  size_t j = 0u;
+  size_t i;
+  for (i = 0u; i < length - 1u; i += 2u)
+  {
+    buffer[i] = deck[j];
+    j++;
+  }
+
+  for (i = 1u; i < length; i += 2u)
+  {
+    buffer[i] = deck[j];
+    j++;
+  }
+
+  memcpy_s(deck, length, buffer, length);
 }
