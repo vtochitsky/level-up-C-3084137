@@ -4,7 +4,8 @@
 
 const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                               'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-                              'W', 'X', 'Y', 'Z'};
+                              'W', 'X', 'Y', 'Z',};
+//			      '0', '1', '2', '3', '4', '5','6', '7','8','9'};
 
 #define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]))
 
@@ -22,26 +23,18 @@ int main(void)
   printf("\n");
 
   /* copy original deck to 'working copy' deck */
-  errno_t err = memcpy_s(deck, LENGTH, original_deck, LENGTH);
-  if (0 != err)
-  {
-    printf("memcpy_s failed with error code: %d\n", err);
-  }
-  else
-  {
-    /* nothing */
-  }
+  memcpy(deck, original_deck, LENGTH);
 
   do
   {
     perfect_shuffle(deck, LENGTH);
     shuffles_counter++;
-    printf("%-5d: ", shuffles_counter);
+    printf("%-5zu: ", shuffles_counter);
     print_deck(deck, LENGTH);
     printf("\n");
   } while (1 != compare_decks(original_deck, deck, LENGTH));
 
-  printf("Deck restored after %d iterations", shuffles_counter);
+  printf("Deck restored after %zu iterations\n", shuffles_counter);
 
   return 0;
 }
@@ -97,5 +90,5 @@ void perfect_shuffle(char *deck, const size_t length)
     j++;
   }
 
-  memcpy_s(deck, length, buffer, length);
+  memcpy(deck, buffer, length);
 }
