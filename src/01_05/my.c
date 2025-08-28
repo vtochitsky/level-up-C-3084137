@@ -9,7 +9,7 @@
 
 //#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]))
 
-const char original_deck[] = "ABCDEFGHIJKLMNOPQRSTVWUXYZ";
+const char original_deck[] = "ABCDEFGHIJKLMNOPQRSTVWUXY";
 
 #define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]) - 1u)
 
