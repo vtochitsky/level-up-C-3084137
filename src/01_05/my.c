@@ -2,16 +2,17 @@
 #include <string.h> /* for memcpy_s */
 #include <assert.h> /* for assert */
 
+//const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F'};
+//const char original_deck[] = {'A', 'B', 'C', 'D', 'E'};
+
 //const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
 //                              'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
 //                              'W', 'X', 'Y', 'Z',
-//			      '0', '1', '2', '3', '4', '5','6', '7','8','9'};
-
+//			      '0', '1', '2', '3', '4','5','6','7','8','9'};
 //#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]))
 
-const char original_deck[] = "ABCDEFGHIJKLMNOPQRSTVWUXY";
-
-#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]) - 1u)
+const char original_deck[] = "ABCDEFGHIJKLMNOPQRSTVWUXYZ";
+#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]) - 1u) /* del nul terminator. it can be calculated by strlen() without -1 */
 
 void print_deck(const char *deck, const size_t length);
 int compare_decks(const char *deck1, const char *deck2, const size_t length);
@@ -76,13 +77,13 @@ int compare_decks(const char *deck1, const char *deck2, const size_t length)
 void perfect_shuffle(char *deck, const size_t length)
 {
   assert(length > 0);
+  char buffer[length]; /* VLA */
 
-  const size_t half = length / 2;
-  char buffer[length]; // VLA
+  const size_t subtrahend = (0u == length%2u ? 1u : 0u);
 
   size_t j = 0u;
   size_t i;
-  for (i = 0u; i < length - 1u; i += 2u)
+  for (i = 0u; i < length - subtrahend; i += 2u)
   {
     buffer[i] = deck[j];
     j++;
