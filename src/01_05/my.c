@@ -2,12 +2,16 @@
 #include <string.h> /* for memcpy_s */
 #include <assert.h> /* for assert */
 
-const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-                              'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-                              'W', 'X', 'Y', 'Z',};
+//const char original_deck[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+//                              'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+//                              'W', 'X', 'Y', 'Z',
 //			      '0', '1', '2', '3', '4', '5','6', '7','8','9'};
 
-#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]))
+//#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]))
+
+const char original_deck[] = "ABCDEFGHIJKLMNOPQRSTVWUXYZ";
+
+#define LENGTH (sizeof(original_deck) / sizeof(original_deck[0u]) - 1u)
 
 void print_deck(const char *deck, const size_t length);
 int compare_decks(const char *deck1, const char *deck2, const size_t length);
