@@ -3,14 +3,26 @@
 
 char *left(char *s,int len)
 {
+	return s;
 }
 
 char *right(char *s,int len)
 {
+	/* evaluate 's' length */
+	int length = 0;
+	char *tmp = s;
+	while(*tmp++)
+	{
+		length++;
+	}
+
+	/* result */
+	return s + length - len;
 }
 
 char *mid(char *s,int offset, int len)
 {
+	return s + offset ;
 }
 
 int main()
