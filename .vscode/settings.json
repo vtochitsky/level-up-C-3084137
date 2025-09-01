@@ -19,5 +19,8 @@
   "terminal.integrated.fontSize": 16,
   "workbench.colorTheme": "Default Light Modern",
   "workbench.fontAliasing": "antialiased",
-  "workbench.statusBar.visible": true
+  "workbench.statusBar.visible": true,
+  "files.associations": {
+    "stdio.h": "c"
+  }
 }
