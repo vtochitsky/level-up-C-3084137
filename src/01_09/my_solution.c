@@ -30,8 +30,8 @@ void print_board(const int x_pos, const int y_pos, const int h_size, const int v
 int main(void)
 {
   /* start position */
-  int king_x = 5 - 1; /* x correspods to horizontal */
-  int king_y = 4 - 1; /* y correspods to vertical */
+  int king_x = 4; /* x correspods to horizontal chess board position 5 due to count starts from 0 */
+  int king_y = 3; /* y correspods to vertical chess board position 4 due to count starts from 0*/
   int king_movement_counter = 0;
 
   srand((unsigned)time(NULL)); /* init random movements */
