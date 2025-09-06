@@ -1,7 +1,7 @@
 Get 3 grids (matrixs)
-3x8
+8x3
 5x5
-6x4
+4x6
 
 Initialize each grid with random characters
 Output the original grid
