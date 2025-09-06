@@ -1,0 +1,9 @@
+Get 3 grids (matrixs)
+3x8
+5x5
+6x4
+
+Initialize each grid with random characters
+Output the original grid
+Rotate clockwise 90 degrees
+Output the rotated grid
