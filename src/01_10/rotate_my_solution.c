@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef enum
-{
-  NO,
-  CLOCKWISE_90,
-} direction_t;
-
 typedef char matrix_data_t;
 
 char charset[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -22,7 +16,7 @@ typedef struct
 matrix_t create_matrix(const size_t rows, const size_t cols);
 void fill_matrix_random_characters(matrix_t *mtx);
 void print_matrix(matrix_t *mtx);
-void rotate_matrix(matrix_t *mtx, direction_t direction);
+void rotate_matrix_clockwise90(matrix_t *mtx);
 void free_matrix(matrix_t *mtx);
 
 int main(void)
@@ -36,7 +30,7 @@ int main(void)
   fill_matrix_random_characters(&m1);
   printf("Original:\n");
   print_matrix(&m1);
-  rotate_matrix(&m1, CLOCKWISE_90);
+  rotate_matrix_clockwise90(&m1);
   printf("Rotated:\n");
   print_matrix(&m1);
   free_matrix(&m1);
@@ -46,7 +40,7 @@ int main(void)
   fill_matrix_random_characters(&m2);
   printf("Original:\n");
   print_matrix(&m2);
-  rotate_matrix(&m2, CLOCKWISE_90);
+  rotate_matrix_clockwise90(&m2);
   printf("Rotated:\n");
   print_matrix(&m2);
   free_matrix(&m2);
@@ -56,7 +50,7 @@ int main(void)
   fill_matrix_random_characters(&m3);
   printf("Original:\n");
   print_matrix(&m3);
-  rotate_matrix(&m3, CLOCKWISE_90);
+  rotate_matrix_clockwise90(&m3);
   printf("Rotated:\n");
   print_matrix(&m3);
   free_matrix(&m3);
@@ -95,7 +89,7 @@ void print_matrix(matrix_t *mtx)
   }
 }
 
-void rotate_matrix(matrix_t *mtx, direction_t direction)
+void rotate_matrix_clockwise90(matrix_t *mtx)
 {
   // TODO: implement me
 }
