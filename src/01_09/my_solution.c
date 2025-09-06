@@ -23,9 +23,9 @@ enum
   NUMBER_OF_MOVEMENTS
 };
 
-int is_king_on_board(int x_pos, int y_pos, int h_size, int v_size);
-
+int is_king_on_board(const int x_pos, const int y_pos, const int h_size, const int v_size);
 void move_king(int *x_pos, int *y_pos);
+void print_board(int x_pos, int y_pos, const int h_size, const int v_size);
 
 int main(void)
 {
@@ -33,33 +33,27 @@ int main(void)
   int king_y = 4; /* start position y */
   int king_movement_counter = 0;
 
-  srand((unsigned)time(NULL));
+  srand((unsigned)time(NULL)); /* init random movements */
 
-  while (is_king_on_board(king_x, king_y, HSIZE, VSIZE))
+  do
   {
+    printf("Step: %d\n", king_movement_counter);
+    print_board(king_x, king_y, HSIZE, VSIZE);
     move_king(&king_x, &king_y);
     king_movement_counter++;
-  }
+  } while (is_king_on_board(king_x, king_y, HSIZE, VSIZE));
 
-  printf("Total number of king's movements: %d\n", king_movement_counter);
+  printf("Total number of king's movements: %d\n", king_movement_counter - 1);
 
   return 0;
 }
 
-int is_king_on_board(int x_pos, int y_pos, int h_size, int v_size)
+int is_king_on_board(const int x_pos, const int y_pos, const int h_size, const int v_size)
 {
-  int result = 0;
-
   if (x_pos < 0 || h_size <= x_pos || y_pos < 0 || v_size <= y_pos)
-  {
-    result = 0;
-  }
-  else
-  {
-    result = 1;
-  }
+    return 0; /* out of board */
 
-  return result;
+  return 1; /* on board */
 }
 
 void move_king(int *x_pos, int *y_pos)
@@ -102,4 +96,9 @@ void move_king(int *x_pos, int *y_pos)
     /* nothing to do */
     break;
   }
+}
+
+void print_board(int x_pos, int y_pos, const int h_size, const int v_size)
+{
+  
 }
