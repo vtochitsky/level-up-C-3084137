@@ -1,0 +1,21 @@
+Calcualating next Monday's date
+
+To know the days to next Monday you must know:
+- the current day of the month
+- the current day of the week
+- is it the end of the month?
+- is it a leap year? (considering February)
+
+Challenge:
+- Write code that calculatess next Monday's date
+- Use today's day and date to start
+- Caclulate the number of days until next Monday
+- Consider the end of the month in your calcualtion
+- Output the date for next Monday
+
+Example of output:
+
+01_11$./monday
+Today is Wednesday, July 7th, 2021
+Next Monday will be the 12th of July
+01_11$
