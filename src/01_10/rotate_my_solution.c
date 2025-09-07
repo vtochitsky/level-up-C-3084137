@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <stdlib.h> /* calloc(), free() */
+#include <time.h>   /* time() */
+#include <string.h> /* memcpy()*/
 
 typedef char matrix_data_t;
 
-char charset[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+char charset[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; /* to fill matrix by random characters */
 
 typedef struct
 {
@@ -89,9 +90,24 @@ void print_matrix(matrix_t *mtx)
   }
 }
 
+/*
+rotate matrix mtx with help of additional matrix
+( using VLA, for big matrix heap malloc/free is better )
+*/
 void rotate_matrix_clockwise90(matrix_t *mtx)
 {
-  // TODO: implement me
+  size_t tmp;
+  matrix_data_t rot_mtx[mtx->cols * mtx->rows]; /* VLA for temorary matrix */
+  size_t idx = 0u;
+  for (size_t col = 0u; col < mtx->cols; col++)
+    for (size_t row = mtx->rows; row > 0; row--)
+      rot_mtx[idx++] = mtx->data[(row - 1) * mtx->cols + col];
+  /* copyt from stack to heap */
+  memcpy(mtx->data, rot_mtx, mtx->cols * mtx->rows);
+  /* rearrange cols vs rows */
+  tmp = mtx->cols;
+  mtx->cols = mtx->rows;
+  mtx->rows = tmp;
 }
 
 void free_matrix(matrix_t *mtx)
