@@ -84,16 +84,21 @@ int calc_next_monday(int weekday, int *monthday, int *month, int *year)
 
   int days_to_next_monday = 8 - weekday;
 
-  if (*monthday + days_to_next_monday > days_in_month[*month - 1]) /* if it doesn't fit in current month */
+  int next_day = *monthday + days_to_next_monday;
+  if (next_day > days_in_month[*month - 1])
   {
-    *monthday = days_in_month[*month - 1] - days_to_next_monday;
-    (*month)++; /* next month */
+    next_day -= days_in_month[*month - 1];
+    (*month)++;
     if (*month > 12)
-      *month = 0; /* next year*/
+    {
+      *month = 1;
+      (*year)++;
+    }
+    *monthday = next_day;
   }
-  else /* within current month and year */
+  else
   {
-    *monthday = *monthday + days_to_next_monday;
+    *monthday = next_day;
   }
 
   return 0;
