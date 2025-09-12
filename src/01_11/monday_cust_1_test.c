@@ -61,11 +61,17 @@ int main()
 
   /* Ancient Time Test Cases */
 
-  // run_test("Ancient date within same month",
-  //          3, 10, 6, 1200, 15, 6, 1200);
+  run_test("Ancient date within same month",
+           3, 10, 5, 1200, 15, 5, 1200);
 
-  // run_test("Ancient leap year February",
-  //          2, 27, 2, 1600, 4, 3, 1600);
+  run_test("Ancient date within same month",
+           6, 10, 6, 1200, 12, 6, 1200);
+
+  run_test("Ancient leap year February",
+           0, 27, 2, 1600, 28, 2, 1600);
+
+  run_test("Ancient leap year February",
+           1, 28, 2, 1600, 6, 3, 1600);
 
   // run_test("Ancient year rollover",
   //          2, 30, 12, 999, 5, 1, 1000);
@@ -118,7 +124,7 @@ int calc_next_monday(int weekday, int *monthday, int *month, int *year)
   if (is_leap_year(*year))
     days_in_month[1] = 29;
 
-  int days_to_next_monday = 8 - weekday;
+  int days_to_next_monday = (8 - weekday)%7;
 
   int next_day = *monthday + days_to_next_monday;
 
