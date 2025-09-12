@@ -59,7 +59,36 @@ int main()
   run_test("February 28 on non-leap year",
            2, 28, 2, 2023, 6, 3, 2023);
 
+  /* Ancient Time Test Cases */
+
+  // run_test("Ancient date within same month",
+  //          3, 10, 6, 1200, 15, 6, 1200);
+
+  // run_test("Ancient leap year February",
+  //          2, 27, 2, 1600, 4, 3, 1600);
+
+  // run_test("Ancient year rollover",
+  //          2, 30, 12, 999, 5, 1, 1000);
+
+  // run_test("Ancient non-leap February",
+  //          0, 28, 2, 1700, 1, 3, 1700);
+
+  /* Future Time Test Cases */
+
+  // run_test("Future date within same month",
+  //          4, 10, 6, 3025, 14, 6, 3025);
+
+  // run_test("Future leap year February",
+  //          2, 27, 2, 2400, 4, 3, 2400);
+
+  // run_test("Future year rollover",
+  //          2, 30, 12, 2999, 5, 1, 3000);
+
+  // run_test("Future non-leap February",
+  //          2, 28, 2, 2100, 6, 3, 2100);
+
   printf("All tests completed.\n");
+
   return 0;
 }
 
@@ -92,6 +121,7 @@ int calc_next_monday(int weekday, int *monthday, int *month, int *year)
   int days_to_next_monday = 8 - weekday;
 
   int next_day = *monthday + days_to_next_monday;
+
   if (next_day > days_in_month[*month - 1])
   {
     next_day -= days_in_month[*month - 1];
