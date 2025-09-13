@@ -73,16 +73,16 @@ int main()
   run_test("Ancient leap year February",
            1, 28, 2, 1600, 6, 3, 1600);
 
-  // run_test("Ancient year rollover",
-  //          2, 30, 12, 999, 5, 1, 1000);
+  run_test("Ancient year rollover",
+           1, 30, 12, 999, 6, 1, 1000);
 
-  // run_test("Ancient non-leap February",
-  //          0, 28, 2, 1700, 1, 3, 1700);
+  run_test("Ancient non-leap February",
+           0, 28, 2, 1700, 1, 3, 1700);
 
   /* Future Time Test Cases */
 
-  // run_test("Future date within same month",
-  //          4, 10, 6, 3025, 14, 6, 3025);
+  run_test("Future date within same month",
+           3, 10, 6, 3025, 15, 6, 3025);
 
   // run_test("Future leap year February",
   //          2, 27, 2, 2400, 4, 3, 2400);
@@ -124,7 +124,7 @@ int calc_next_monday(int weekday, int *monthday, int *month, int *year)
   if (is_leap_year(*year))
     days_in_month[1] = 29;
 
-  int days_to_next_monday = (8 - weekday)%7;
+  int days_to_next_monday = weekday==0 ? 1 :(8 - weekday);
 
   int next_day = *monthday + days_to_next_monday;
 
