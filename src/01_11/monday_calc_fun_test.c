@@ -79,16 +79,16 @@ int main()
   /* Future Time Test Cases */
 
   run_test("Future date within same month",
-           3, 10, 6, 3025, 15, 6, 3025);
+           5, 10, 6, 3025, 13, 6, 3025);
 
-  // run_test("Future leap year February",
-  //          2, 27, 2, 2400, 4, 3, 2400);
+  run_test("Future leap year February",
+           0, 27, 2, 2400, 28, 2, 2400);
 
-  // run_test("Future year rollover",
-  //          2, 30, 12, 2999, 5, 1, 3000);
+  run_test("Future year rollover",
+           1, 30, 12, 2999, 6, 1, 3000);
 
-  // run_test("Future non-leap February",
-  //          2, 28, 2, 2100, 6, 3, 2100);
+  run_test("Future non-leap February",
+           0, 28, 2, 2100, 1, 3, 2100);
 
   printf("All tests completed.\n");
 
