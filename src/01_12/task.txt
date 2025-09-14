@@ -6,7 +6,7 @@ The strfmon() function can be used to:
 
 - Format monetary values based on the locale
 - Defined in the monetary.h header file
-- Not all C libraries include the strfmon() fynction
+- Not all C libraries include the strfmon() function
 
 Challenge:
 - Write code that processes 10 integer values
