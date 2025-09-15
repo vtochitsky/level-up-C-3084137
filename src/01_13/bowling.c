@@ -55,7 +55,12 @@ int get_score(int frame_number, const char *message)
 
 void calc_frame_table(frame_t *frames, int nframes, int frame)
 {
-  // TODO: implement me
+  int previos = 0;
+  if (frame > 0)
+    previos += frames[frame - 1].total;
+  frames[frame].total = previos + frames[frame].first + frames[frame].second + frames[frame].third;
+  // recalculate back previos frames in case of strike(s) or spare(s)
+  // TODO: implement me ...
 }
 
 void print_frame_table(frame_t *frames, int nframes, int frame)
