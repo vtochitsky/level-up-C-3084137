@@ -1,0 +1,41 @@
+Score a Frame of Bowling
+
+A game is divided into 10 frames
+in each frame:
+-roll a ball to knock down 10 pins
+-all 10 pins down on the first ball is a strike
+-score is 10 points plus the next two balls rolled (X)Roll a ball to knock down 10 pins
+if you fail to knock down all pins
+-for non-strikes, roll a second ball in the frame
+-if you knock down the remainder of the pins, you score a spare (/)
+-score is 10 points plus the next ball rolled
+-score is the sum of the pins knocked down (two balls)
+-A score of zero is recorder as a single dash (-)
+
+Here are sme sample frames:
+-All 10 pins first frame, strike (X)
+-8 pins first frame, 2 pins second frame, spare(/)
+-4 pins first frame, 1 pin second frame, total 5
+-Zero pins first frame (-), 6 pins second frame, total 6
+
+
+Before computers took over, bowlers scored their own game. 
+Knocked pins were recorded and scores tallied. 
+The calculations are basic math and people seemed to enjoy it. 
+You can enjoy it too for this C code challenge. 
+I'd like you to code a single frame from a game of bowling. <-----
+A game is divided into 10 frames. 
+In each frame the object is to roll a ball and knock down 10 pins. 
+If you roll the ball and it knocks down all 10 pins, that's a strike. 
+The symbol being an X. 
+Your score is 10 points plus the points for the next two balls. 
+If you fail to knock down all 10 pins, you roll a second ball in the frame. 
+If you knock down the remainder of the pins, you score a spare. 
+The symbol being a slash or half an X. 
+The score is 10 points plus the points of the next ball. 
+If you don't get down all 10 pins, your score is the sum of all the pins knocked over by the two balls. 
+A score of zero or a gutter ball is denoted by a dash. 
+Here are some sample frames, a strike, a spare, and something more typical of my bowling game. 
+This is the output you must generate for this challenge: simulate a single frame in a game of bowling. <-----
+Pause the video now to try this challenge. 
+
