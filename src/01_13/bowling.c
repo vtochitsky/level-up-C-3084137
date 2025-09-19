@@ -6,16 +6,16 @@ typedef struct frame
 {
   int first;
   int second;
-  int third;
+  int third; // !!!
   int total;
 } frame_t;
 
 #define NFRAMES 10
 frame_t frames[NFRAMES];
 
-int get_score(int frame_number, const char *message);
-void calc_frame_table(frame_t *frames, int nframes, int frame);
-void print_frame_table(frame_t *frames, int nframes, int frame);
+int get_score(int i, const char *message);
+void calc_frame_table(frame_t *frames, int frames_length, int i);
+void print_frame_table(frame_t *frames, int frames_length, int frame);
 
 int main(void)
 {
@@ -30,7 +30,19 @@ int main(void)
     /* if no strike OR if the last frame then 2nd roll*/
     if (10 != frames[fcnt].first || NFRAMES - 1 == fcnt)
     {
-      frames[fcnt].second = get_score(fcnt, "2nd");
+      frames[fcnt].second = 0;
+      do
+      {
+        frames[fcnt].second = get_score(fcnt, "2nd");
+        if (frames[fcnt].second > 10 - frames[fcnt].first)
+        {
+          puts("Error: sum of 1st and 2nd can not be greater than 10!");
+        }
+        else
+        {
+          break;
+        }
+      } while (1);
     }
     /* if the last frame AND 2nd is not 0 AND 1st plus 2nd is spare at least */ // TODO: clarify
     if (NFRAMES - 1 == fcnt && 0 != frames[fcnt].second && (frames[fcnt].first + frames[fcnt].second) >= 10)
@@ -45,101 +57,171 @@ int main(void)
   return 0;
 }
 
-int get_score(int frame_number, const char *message)
+static inline int strike(frame_t frm)
+{
+  return 10 == frm.first;
+}
+
+static inline int spare(frame_t frm)
+{
+  return 10 != frm.first && 10 == (frm.first + frm.second);
+}
+
+int get_score(int i, const char *message)
 {
   int result;
-  printf("Enter points for #%d frame, %s roll:", frame_number + 1, message);
-  scanf("%d", &result);
+  int res;
+  do
+  {
+    printf("Enter points for #%d frame, %s roll:", i + 1, message);
+    res = scanf("%d", &result);
+
+    if (res != 1)
+    {
+      /* Clean input buffer up: read and throw out all characters up to endo of string*/
+      while (getchar() != '\n')
+      { /* nothing is here */
+      };
+      puts("Invalid input. Please enter an integer.");
+    }
+  } while (res != 1);
+
   return result;
 }
 
-void calc_frame_table(frame_t *frames, int nframes, int frame)
+/* 'i' is current frame number */
+void calc_frame_table(frame_t *frames, int frames_length, int i)
 {
-  int previos = 0;
-  if (frame > 0)
-    previos += frames[frame - 1].total;
-  frames[frame].total = previos + frames[frame].first + frames[frame].second + frames[frame].third;
-  // recalculate back previos frames in case of strike(s) or spare(s)
-  // TODO: implement me ...
+  /* flags */
+  static int add1st = 0;
+  static int add2nd = 0;
+
+  /*
+  --------------------------------------
+  1st roll
+  --------------------------------------
+  */
+
+  /* handling previous frame */
+  if (1 == add1st) /* it can be true only for i > 0 */
+  {
+    frames[i - 1].total += frames[i].first;
+    add1st = 0; // add1st--;
+  }
+
+  /* considering current frame to take it into account in a next frame */
+  if (strike(frames[i]) || spare(frames[i]))
+  {
+    add1st = 1; // add1st++;
+  }
+
+  /*
+  --------------------------------------
+  2nd roll
+  --------------------------------------
+  */
+
+  /* handling previous frames */
+  if (2 == add2nd)
+  {
+    frames[i - 2].total += frames[i].first;
+    add2nd = 1; // add2nd--;
+  }
+
+  if (1 == add2nd && !strike(frames[i]))
+  {
+    frames[i - 1].total += frames[i].second;
+    add2nd = 0; // add2nd--;
+  }
+
+  /* considering current frame to take it into account in next two frames (either i+1 or i+2) */
+  if (strike(frames[i]))
+  {
+    add2nd++; // 0--->1 or 1--->2
+  }
+
+  /* .total calculation for current frame  */
+  int previous_total = i > 0 ? frames[i - 1].total : 0; /* previous_total is zero for the 1st frame */
+  frames[i].total = frames[i].first + frames[i].second + previous_total;
 }
 
-void print_frame_table(frame_t *frames, int nframes, int frame)
+void print_frame_table(frame_t *frames, int frames_length, int i)
 {
   char frst[4];
   char scnd[4];
   char thrd[4];
 
-  for (int i = 0; i <= frame; i++)
+  for (int idx = 0; idx <= i; idx++)
   {
     *frst = 0;
     *scnd = 0;
     *thrd = 0;
-    if (10 == frames[i].first)
+    if (10 == frames[idx].first)
     {
       strcpy(scnd, "X");
     }
-    else if (10 == frames[i].first + frames[i].second)
+    else if (10 == frames[idx].first + frames[idx].second)
     {
       strcpy(scnd, "/");
     }
-    else if (0 == frames[i].first + frames[i].second)
+    else if (0 == frames[idx].first + frames[idx].second)
     {
       strcpy(scnd, "-");
     }
     else
     {
-      itoa(frames[i].first, frst, 10);
-      itoa(frames[i].second, scnd, 10);
+      itoa(frames[idx].first, frst, 10);
+      itoa(frames[idx].second, scnd, 10);
     }
-    if (i != nframes - 1)
+    if (idx != frames_length - 1)
     {
-      printf("[%2s,%2s,%3d]", frst, scnd, frames[i].total);
+      printf("[%2s,%2s,%3d]", frst, scnd, frames[idx].total);
     }
   }
 
-  if (nframes - 1 == frame)
+  if (frames_length - 1 == i)
   {
-    itoa(frames[frame].first, frst, 10);
-    itoa(frames[frame].second, scnd, 10);
-    itoa(frames[frame].third, thrd, 10);
+    itoa(frames[i].first, frst, 10);
+    itoa(frames[i].second, scnd, 10);
+    itoa(frames[i].third, thrd, 10);
 
-    if (0 == frames[frame].first)
+    if (0 == frames[i].first)
     {
       strcpy(frst, "-");
     }
 
-    if (0 == frames[frame].second)
+    if (0 == frames[i].second)
     {
       strcpy(scnd, "-");
     }
 
-    if (0 == frames[frame].third)
+    if (0 == frames[i].third)
     {
       strcpy(thrd, "-");
     }
 
-    if (10 == frames[frame].first)
+    if (10 == frames[i].first)
     {
       strcpy(frst, "X");
     }
 
-    if (10 == frames[frame].second)
+    if (10 == frames[i].second)
     {
       strcpy(scnd, "X");
     }
 
-    if (10 == frames[frame].third)
+    if (10 == frames[i].third)
     {
       strcpy(thrd, "X");
     }
 
-    if (10 != frames[frame].first && 10 == frames[frame].first + frames[frame].second)
+    if (10 != frames[i].first && 10 == frames[i].first + frames[i].second)
     {
       strcpy(frst, "");
       strcpy(scnd, "/");
     }
 
-    printf("[%2s,%2s,%2s,%3d]", frst, scnd, thrd, frames[frame].total);
+    printf("[%2s,%2s,%2s,%3d]", frst, scnd, thrd, frames[i].total);
   }
   puts("");
 }
