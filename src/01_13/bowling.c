@@ -6,13 +6,14 @@ typedef struct frame
 {
   int first;
   int second;
-  int third; // !!!
+  int third; // !!! only for frame #10
   int total;
 } frame_t;
 
 #define NFRAMES 10
 frame_t frames[NFRAMES];
-
+static inline int strike(frame_t frm);
+static inline int spare(frame_t frm);
 int get_score(int i, const char *message);
 void calc_frame_table(frame_t *frames, int frames_length, int i);
 void print_frame_table(frame_t *frames, int frames_length, int frame);
@@ -34,7 +35,7 @@ int main(void)
       do
       {
         frames[fcnt].second = get_score(fcnt, "2nd");
-        if (frames[fcnt].second > 10 - frames[fcnt].first)
+        if (frames[fcnt].second > 10 - frames[fcnt].first && /* not frame #10 */ (10 - 1) != fcnt)
         {
           puts("Error: sum of 1st and 2nd can not be greater than 10!");
         }
@@ -44,8 +45,8 @@ int main(void)
         }
       } while (1);
     }
-    /* if the last frame AND 2nd is not 0 AND 1st plus 2nd is spare at least */ // TODO: clarify
-    if (NFRAMES - 1 == fcnt && 0 != frames[fcnt].second && (frames[fcnt].first + frames[fcnt].second) >= 10)
+    /* if the last frame and spare or strike */
+    if (NFRAMES - 1 == fcnt && (strike(frames[fcnt]) || spare(frames[fcnt])))
     {
       frames[fcnt].third = get_score(fcnt, "3rd");
     }
@@ -93,8 +94,8 @@ int get_score(int i, const char *message)
 void calc_frame_table(frame_t *frames, int frames_length, int i)
 {
   /* flags */
-  static int add1st = 0;
-  static int add2nd = 0;
+  static int add1st = 0; // can be moved to some structure
+  static int add2nd = 0; // can be moved to some structure
 
   /*
   --------------------------------------
@@ -128,7 +129,7 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
     add2nd = 1; // add2nd--;
   }
 
-  if (1 == add2nd && !strike(frames[i]))
+  if (1 == add2nd && !strike(frames[i]) || 1 == add2nd && (10 - 1) == i /* add-on for frame #9 */)
   {
     frames[i - 1].total += frames[i].second;
     add2nd = 0; // add2nd--;
@@ -140,9 +141,20 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
     add2nd++; // 0--->1 or 1--->2
   }
 
+  /* only frame #10 */
+  if ((10 - 1) == i)
+  {
+    printf("%d %d %d\n", frames[i].first, frames[i].second, frames[i].third);
+    /* strike or spare */
+    if (10 == frames[i].first || 10 == (frames[i].first + frames[i].second))
+    {
+      frames[i].total += frames[i].third;
+    }
+  }
+
   /* .total calculation for current frame  */
   int previous_total = i > 0 ? frames[i - 1].total : 0; /* previous_total is zero for the 1st frame */
-  frames[i].total = frames[i].first + frames[i].second + previous_total;
+  frames[i].total += frames[i].first + frames[i].second + previous_total;
 }
 
 void print_frame_table(frame_t *frames, int frames_length, int i)
