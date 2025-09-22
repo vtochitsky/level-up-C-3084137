@@ -22,6 +22,9 @@
   "workbench.statusBar.visible": true,
   "files.associations": {
     "stdio.h": "c",
-    "assert.h": "c"
+    "assert.h": "c",
+    "calc_frames.h": "c",
+    "stdlib.h": "c",
+    "string.h": "c"
   }
 }
