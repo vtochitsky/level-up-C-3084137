@@ -36,6 +36,7 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
   if (2 == add2nd)
   {
     frames[i - 2].total += frames[i].first;
+    frames[i-1].total += frames[i].first;
     add2nd = 1; // add2nd--;
   }
 
@@ -59,6 +60,8 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
     {
       frames[i].total += frames[i].third;
     }
+    // finally
+    add1st = add2nd = 0;
   }
 
   /* .total calculation for current frame  */
