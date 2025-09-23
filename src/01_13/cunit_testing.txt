@@ -1,0 +1,15 @@
+install cuint framerwork:
+pacman -S mingw-w64-ucrt-x86_64-cunit
+or/and
+pacman -S mingw-w64-x86_64-cunit
+or/and
+pacman -S mingw-w64-clang-x86_64-cunit
+
+
+build:
+
+gcc .\test_runner.c .\calc_frames.c -o .\test_runner -lcunit
+
+run:
+
+.\test_runner
