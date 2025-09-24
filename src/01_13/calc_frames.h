@@ -1,12 +1,16 @@
 #ifndef _CALC_FRAMES_H_
 #define _CALC_FRAMES_H_
 
+#define VER1
+// #define VER2
+
 typedef struct frame
 {
   int first;
   int second;
   int third; // !!! only for frame #10
   int total;
+  int state; // for new implmentation
 } frame_t;
 
 #define NFRAMES 10

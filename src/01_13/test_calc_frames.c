@@ -117,6 +117,7 @@ int test_calc_frames(frame_t *frames, int frames_length)
   {
     frames_without_total[i] = frames[i];
     frames_without_total[i].total = 0;
+    // printf("%d\n", frames[i].total);
   }
 
   /* go through the table to calculate total*/

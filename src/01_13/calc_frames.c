@@ -1,5 +1,7 @@
 #include "calc_frames.h"
 
+#if defined(VER1) && !defined(VER2)
+
 /* 'i' is current frame number */
 void calc_frame_table(frame_t *frames, int frames_length, int i)
 {
@@ -36,7 +38,7 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
   if (2 == add2nd)
   {
     frames[i - 2].total += frames[i].first;
-    frames[i-1].total += frames[i].first;
+    frames[i - 1].total += frames[i].first;
     add2nd = 1; // add2nd--;
   }
 
@@ -68,3 +70,84 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
   int previous_total = i > 0 ? frames[i - 1].total : 0; /* previous_total is zero for the 1st frame */
   frames[i].total += frames[i].first + frames[i].second + previous_total;
 }
+
+#elif !defined(VER1) && defined(VER2)
+
+/* states of frame */
+enum
+{
+  NOEXEC = 0,
+  FIRST,
+  SPARE,
+  STRIKE1,
+  STRIKE2,
+  DONE
+};
+
+void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i)
+{
+  int previous_total = 0;
+  int second_roll = 0;
+
+  int start_i = 1 < i ? i - 2 : 0;
+  for (int f = start_i; f <= i; f++)
+  {
+    previous_total = f == 0 ? 0 : frames[f - 1].total;
+    switch (frames[f].state)
+    {
+    case (NOEXEC):
+      frames[f].total = frames[f].first + previous_total;
+      if (10 == frames[f].total)
+      {
+        frames[f].state = STRIKE1;
+      }
+      else
+      {
+        frames[f].state = FIRST;
+      }
+      break;
+    case (FIRST):
+      frames[f].total += frames[f].second;
+      if (10 == frames[f].total)
+      {
+        frames[f].state = SPARE;
+      }
+      else
+      {
+        frames[f].total += frames[f].third;
+        frames[f].state = DONE;
+      }
+      break;
+    case (SPARE):
+      frames[f].total += frames[f + 1].first; // f+1 !!!
+      frames[f].total += frames[f].third;
+      frames[f].state = DONE;
+      break;
+    case (STRIKE1):
+      frames[f].total += frames[f + 1].first; // f+1 !!!
+      frames[f].state = STRIKE2;
+      break;
+    case (STRIKE2):
+      if (STRIKE1 == frames[f + 1].state)
+      {
+        second_roll = frames[f + 2].first;
+      }
+      else
+      {
+        second_roll = frames[f + 1].first;
+      }
+      frames[f].total += second_roll;
+      frames[f].total += frames[f].third;
+      frames[f].state = DONE;
+      break;
+    case (DONE):
+      break;
+    default:
+      break;
+    }
+  }
+}
+
+#else
+#error "calc_frame_table implementation is not defined"
+#endif
