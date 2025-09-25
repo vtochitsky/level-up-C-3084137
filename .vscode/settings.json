@@ -25,6 +25,8 @@
     "assert.h": "c",
     "calc_frames.h": "c",
     "stdlib.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "cunit.h": "c",
+    "basic.h": "c"
   }
 }
