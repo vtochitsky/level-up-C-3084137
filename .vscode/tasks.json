@@ -3,13 +3,15 @@
     {
       "type": "cppbuild",
       "label": "C/C++: gcc build active file",
-      "command": "/usr/bin/gcc",
+      "command": "C:/msys64/ucrt64/bin/gcc.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
         "${file}",
+        "${fileDirname}/calc_frames.c",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${fileDirname}/${fileBasenameNoExtension}",
+        "-lcunit"
       ],
       "options": {
         "cwd": "${fileDirname}"
