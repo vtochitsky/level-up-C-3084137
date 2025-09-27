@@ -97,7 +97,7 @@ void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i
     {
     case (NOEXEC):
       frames[f].total = frames[f].first + previous_total;
-      if (10 == frames[f].total)
+      if (10 == frames[f].first)
       {
         frames[f].state = STRIKE1;
       }
@@ -108,7 +108,7 @@ void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i
       break;
     case (FIRST):
       frames[f].total += frames[f].second;
-      if (10 == frames[f].total)
+      if (10 == (frames[f].first + frames[f].second))
       {
         frames[f].state = SPARE;
       }

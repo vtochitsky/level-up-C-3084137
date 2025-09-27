@@ -1,8 +1,8 @@
 #ifndef _CALC_FRAMES_H_
 #define _CALC_FRAMES_H_
 
-#define VER1
-// #define VER2
+// #define VER1
+#define VER2
 
 typedef struct frame
 {
