@@ -366,18 +366,24 @@ void test_spare_bonus_d(void) // spare
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
 }
 
-void test_strike_bonus(void)
+void test_strike_bonus_a(void)
 {
     frame_t frames[NFRAMES] = {0};
+
     frames[0].first = 10; // strike
-    frames[1].first = 3;
-    frames[1].second = 6;
-
     calc_frame_table(frames, NFRAMES, 0);
-    calc_frame_table(frames, NFRAMES, 1);
+    CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
+    CU_ASSERT_EQUAL(frames[1].total, 0);
 
-    CU_ASSERT_EQUAL(frames[0].total, 19); // 10 + 3 + 6
-    CU_ASSERT_EQUAL(frames[1].total, 28); // 3 + 6 + 19
+    frames[1].first = 3;
+    calc_frame_table(frames, NFRAMES, 1);
+    CU_ASSERT_EQUAL(frames[0].total, 13); // 10 + 3 yet
+    CU_ASSERT_EQUAL(frames[1].total, 16); // 13 + 3 yet
+
+    frames[1].second = 6;
+    calc_frame_table(frames, NFRAMES, 1);
+    CU_ASSERT_EQUAL(frames[0].total, 19); // 13 + 6
+    CU_ASSERT_EQUAL(frames[1].total, 28); // 19 + 3 + 6
 }
 
 void test_double_strike_bonus(void)
@@ -432,9 +438,10 @@ int main()
     }
 
     /* add a suites to the registry */
-    CU_pSuite pSuite1, pSuite2;
+    CU_pSuite pSuite1, pSuite2, pSuite3;
     if (NULL == (pSuite1 = CU_add_suite("Normal frames i.e. less then spare and strike", 0, 0)) ||
-        NULL == (pSuite2 = CU_add_suite("Spare bonus frames", 0, 0)))
+        NULL == (pSuite2 = CU_add_suite("Spare bonus frames", 0, 0)) ||
+        NULL == (pSuite3 = CU_add_suite("Strike bonus frames", 0, 0)))
     {
         puts("CU_add_suites ' error");
         puts(CU_get_error_msg());
@@ -473,7 +480,15 @@ int main()
         return CU_get_error();
     }
 
-    // CU_add_test(suite, "Strike bonus", test_strike_bonus);
+    /* add a tests to the suite */
+    if (NULL == CU_add_test(pSuite3, "Strike bonus a", test_strike_bonus_a))
+    {
+        puts("CU_add_test to 'Spare bonus frames' suite");
+        puts(CU_get_error_msg());
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+
     // CU_add_test(suite, "Double strike bonus", test_double_strike_bonus);
     // CU_add_test(suite, "10th frame spare", test_tenth_frame_spare);
     // CU_add_test(suite, "10th frame strike", test_tenth_frame_strike);
