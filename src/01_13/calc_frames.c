@@ -73,17 +73,6 @@ void calc_frame_table(frame_t *frames, int frames_length, int i)
 
 #elif !defined(VER1) && defined(VER2)
 
-/* states of frame */
-enum
-{
-  NOEXEC = 0,
-  FIRST,
-  SPARE,
-  STRIKE1,
-  STRIKE2,
-  DONE
-};
-
 void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i)
 {
   int previous_total = 0;
@@ -107,7 +96,7 @@ void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i
       }
       break;
     case (FIRST):
-      frames[f].total += frames[f].second;
+      frames[f].total = frames[f].first + previous_total + frames[f].second;
       if (10 == (frames[f].first + frames[f].second))
       {
         frames[f].state = SPARE;
@@ -134,7 +123,7 @@ void calc_frame_table(frame_t *frames, int frames_length /* not needed */, int i
       }
       else
       {
-        second_roll = frames[f + 1].first;
+        second_roll = frames[f + 1].second;
       }
       frames[f].total += second_roll;
       frames[f].total += frames[f].third;

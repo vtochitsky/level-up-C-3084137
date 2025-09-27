@@ -4,6 +4,18 @@
 // #define VER1
 #define VER2
 
+// for VER2 only
+/* states of frame */
+enum
+{
+  NOEXEC = 0,
+  FIRST,
+  SPARE,
+  STRIKE1,
+  STRIKE2,
+  DONE
+};
+
 typedef struct frame
 {
   int first;
