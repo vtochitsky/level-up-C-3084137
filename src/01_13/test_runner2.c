@@ -439,8 +439,6 @@ void test_strike_bonus_c(void) // strike, strike, strike
     CU_ASSERT_EQUAL(frames[1].total, 50); // 30 + 10 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 60); // 50 + 10 yet
     CU_ASSERT_EQUAL(frames[3].total, 0);
-    printf("\n%d %d\n", 1, frames[1].total);
-    printf("%d %d\n", 2, frames[2].total);
 }
 
 void test_strike_bonus_d(void) // strike, strike, strike, normal
@@ -601,9 +599,10 @@ int main()
     // CU_basic_run_suite(pSuite1);
     // CU_basic_run_suite(pSuite2);
     // CU_basic_run_suite(pSuite3);
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, normal", test_strike_bonus_a));
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike, normal", test_strike_bonus_b));
+    CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, normal", test_strike_bonus_a));
+    CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike, normal", test_strike_bonus_b));
     CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike, strike", test_strike_bonus_c));
+
     CU_cleanup_registry();
     return CU_get_error();
 }
