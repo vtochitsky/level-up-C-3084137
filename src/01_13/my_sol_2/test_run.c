@@ -407,14 +407,14 @@ void test_strike_bonus_b(void) // strike, strike, normal
     frames[2].first = 3;
     calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 23); // 20 + 3 stop
-    CU_ASSERT_EQUAL(frames[1].total, 33); // 30 + 3
-    CU_ASSERT_EQUAL(frames[2].total, 36); // 33 + 3
+    CU_ASSERT_EQUAL(frames[1].total, 36); // 23+10 + 3
+    CU_ASSERT_EQUAL(frames[2].total, 39); //
 
     frames[2].second = 5; // normal
     calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 23); //
-    CU_ASSERT_EQUAL(frames[1].total, 38); // 33 + 5
-    CU_ASSERT_EQUAL(frames[2].total, 46); // 38 + 3 + 5
+    CU_ASSERT_EQUAL(frames[1].total, 41); //
+    CU_ASSERT_EQUAL(frames[2].total, 49); //
 }
 
 void test_strike_bonus_c(void) // strike
@@ -498,6 +498,13 @@ void test_strike_bonus_f(void) // strike, strike, strike, strike
     CU_ASSERT_EQUAL(frames[1].total, 50); // 30 + 10 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 60); // 50 + 10 yet
     CU_ASSERT_EQUAL(frames[3].total, 0);
+
+    frames[3].first = 10; // strike
+    calc_score(frames, 3);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 80);
+    CU_ASSERT_EQUAL(frames[3].total, 90);
 }
 
 void test_strike_bonus_g(void) // strike, strike, strike, normal
@@ -524,8 +531,6 @@ void test_strike_bonus_g(void) // strike, strike, strike, normal
     CU_ASSERT_EQUAL(frames[1].total, 50); // 30 + 10 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 60); // 50 + 10 yet
     CU_ASSERT_EQUAL(frames[3].total, 0);
-    printf("\n%d %d\n", 1, frames[1].total);
-    printf("%d %d\n", 2, frames[2].total);
 
     frames[3].first = 4;
     calc_score(frames, 3);
@@ -542,21 +547,93 @@ void test_strike_bonus_g(void) // strike, strike, strike, normal
     CU_ASSERT_EQUAL(frames[3].total, 82); //
 }
 
-void test_double_strike_bonus(void)
+void test_strike_bonus_h(void) // 9 strikes and 1 fail
 {
     frame_t frames[NFRAMES] = {0};
+
     frames[0].first = 10; // strike
-    frames[1].first = 10; // strike
-    frames[2].first = 4;
-    frames[2].second = 3;
-
     calc_score(frames, 0);
-    calc_score(frames, 1);
-    calc_score(frames, 2);
+    CU_ASSERT_EQUAL(frames[0].total, 10);
+    CU_ASSERT_EQUAL(frames[1].total, 0);
+    CU_ASSERT_EQUAL(frames[2].total, 0);
+    CU_ASSERT_EQUAL(frames[3].total, 0);
 
-    CU_ASSERT_EQUAL(frames[0].total, 24); // 10 + 10 + 4
-    CU_ASSERT_EQUAL(frames[1].total, 41); // 10 + 4 + 3 + 24
-    CU_ASSERT_EQUAL(frames[2].total, 48); // 4 + 3 + 41
+    frames[1].first = 10; // strike
+    calc_score(frames, 1);
+    CU_ASSERT_EQUAL(frames[0].total, 20);
+    CU_ASSERT_EQUAL(frames[1].total, 30);
+    CU_ASSERT_EQUAL(frames[2].total, 0);
+    CU_ASSERT_EQUAL(frames[3].total, 0);
+
+    frames[2].first = 10; // strike
+    calc_score(frames, 2);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 50);
+    CU_ASSERT_EQUAL(frames[2].total, 60);
+    CU_ASSERT_EQUAL(frames[3].total, 0);
+
+    frames[3].first = 10; // strike
+    calc_score(frames, 3);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 80);
+    CU_ASSERT_EQUAL(frames[3].total, 90);
+
+    frames[4].first = 10; // strike
+    calc_score(frames, 4);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 90);
+    CU_ASSERT_EQUAL(frames[3].total, 110);
+    CU_ASSERT_EQUAL(frames[4].total, 120);
+
+    frames[5].first = 10; // strike
+    calc_score(frames, 5);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 90);
+    CU_ASSERT_EQUAL(frames[3].total, 120);
+    CU_ASSERT_EQUAL(frames[4].total, 140);
+    CU_ASSERT_EQUAL(frames[5].total, 150);
+
+    frames[6].first = 10; // strike
+    calc_score(frames, 6);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 90);
+    CU_ASSERT_EQUAL(frames[3].total, 120);
+    CU_ASSERT_EQUAL(frames[4].total, 150);
+    CU_ASSERT_EQUAL(frames[5].total, 170);
+    CU_ASSERT_EQUAL(frames[6].total, 180);
+
+    frames[7].first = 10; // strike
+    calc_score(frames, 7);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 90);
+    CU_ASSERT_EQUAL(frames[3].total, 120);
+    CU_ASSERT_EQUAL(frames[4].total, 150);
+    CU_ASSERT_EQUAL(frames[5].total, 180);
+    CU_ASSERT_EQUAL(frames[6].total, 200);
+    CU_ASSERT_EQUAL(frames[7].total, 210);
+
+    frames[8].first = 10; // strike
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[0].total, 30);
+    CU_ASSERT_EQUAL(frames[1].total, 60);
+    CU_ASSERT_EQUAL(frames[2].total, 90);
+    CU_ASSERT_EQUAL(frames[3].total, 120);
+    CU_ASSERT_EQUAL(frames[4].total, 150);
+    CU_ASSERT_EQUAL(frames[5].total, 180);
+    CU_ASSERT_EQUAL(frames[6].total, 210);
+    CU_ASSERT_EQUAL(frames[7].total, 230);
+    CU_ASSERT_EQUAL(frames[8].total, 240);
+
+    frames[9].first = 0;
+    calc_score(frames, 9);
+    frames[9].second = 0;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 240);
 }
 
 void test_tenth_frame_spare(void)
@@ -636,20 +713,22 @@ int main()
         return CU_get_error();
     }
 
-    // /* add a tests to the suite */
-    // if (NULL == CU_add_test(pSuite3, "strike, normal", test_strike_bonus_a) ||
-    //     NULL == CU_add_test(pSuite3, "strike, strike, normal", test_strike_bonus_b) ||
-    //     NULL == CU_add_test(pSuite3, "strike, strike, strike", test_strike_bonus_c)
-    //     // NULL == CU_add_test(pSuite3, "strike, strike, strike, normal", test_strike_bonus_d)
-    // )
-    // {
-    //     puts("CU_add_test to 'Spare bonus frames' suite");
-    //     puts(CU_get_error_msg());
-    //     CU_cleanup_registry();
-    //     return CU_get_error();
-    // }
+    /* add a tests to the suite */
+    if (NULL == CU_add_test(pSuite3, "strike, normal", test_strike_bonus_a) ||
+        NULL == CU_add_test(pSuite3, "strike, strike, normal", test_strike_bonus_b) ||
+        NULL == CU_add_test(pSuite3, "strike", test_strike_bonus_c) ||
+        NULL == CU_add_test(pSuite3, "strike, strike", test_strike_bonus_d) ||
+        NULL == CU_add_test(pSuite3, "strike, strike, strike", test_strike_bonus_e) ||
+        NULL == CU_add_test(pSuite3, "strike, strike, strike, strike", test_strike_bonus_f) ||
+        NULL == CU_add_test(pSuite3, "strike, strike, strike, normal", test_strike_bonus_g) ||
+        NULL == CU_add_test(pSuite3, "9 strikes, fail", test_strike_bonus_h))
+    {
+        puts("CU_add_test to 'Spare bonus frames' suite");
+        puts(CU_get_error_msg());
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-    // CU_add_test(suite, "Double strike bonus", test_double_strike_bonus);
     // CU_add_test(suite, "10th frame spare", test_tenth_frame_spare);
     // CU_add_test(suite, "10th frame strike", test_tenth_frame_strike);
 
@@ -657,12 +736,7 @@ int main()
     // CU_basic_run_tests();
     // CU_basic_run_suite(pSuite1);
     // CU_basic_run_suite(pSuite2);
-    // CU_basic_run_suite(pSuite3);
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, normal", test_strike_bonus_a));
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike, normal", test_strike_bonus_b));
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike", test_strike_bonus_c));
-    // CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike", test_strike_bonus_d));
-    CU_basic_run_test(pSuite3, CU_add_test(pSuite3, "strike, strike, strike", test_strike_bonus_e));
+    CU_basic_run_suite(pSuite3);
 
     CU_cleanup_registry();
     return CU_get_error();
