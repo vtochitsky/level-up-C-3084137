@@ -1,28 +1,12 @@
 #ifndef _CALC_FRAMES_H_
 #define _CALC_FRAMES_H_
 
-// #define VER1
-#define VER2
-
-// for VER2 only
-/* states of frame */
-enum
-{
-  NOEXEC = 0,
-  FIRST,
-  SPARE,
-  STRIKE1,
-  STRIKE2,
-  DONE
-};
-
 typedef struct frame
 {
   int first;
   int second;
-  int third; // !!! only for frame #10
+  int third; /* only for frame #10 */
   int total;
-  int state; // for new implmentation
 } frame_t;
 
 #define NFRAMES 10

@@ -16,7 +16,10 @@ int main(void)
   while (fcnt < NFRAMES)
   {
     /* 1st roll */
-    frames[fcnt].first = get_score(fcnt, "1st");
+    do
+    {
+      frames[fcnt].first = get_score(fcnt, "1st");
+    } while (frames[fcnt].first > 10);
 
     /* if no strike OR if the last frame then 2nd roll*/
     if (10 != frames[fcnt].first || NFRAMES - 1 == fcnt)

@@ -157,18 +157,18 @@ int main()
     CU_initialize_registry();
     CU_pSuite suite = CU_add_suite("calc_frame_table_tests", 0, 0);
 
-    CU_add_test(suite, "Normal frame", test_normal_frame);
-    CU_add_test(suite, "Spare bonus", test_spare_bonus);
-    CU_add_test(suite, "Strike bonus", test_strike_bonus);
-    CU_add_test(suite, "Double strike bonus", test_double_strike_bonus);
-    CU_add_test(suite, "10th frame spare", test_tenth_frame_spare);
-    CU_add_test(suite, "10th frame strike", test_tenth_frame_strike);
+    CU_add_test(suite, "Normal frame                      ", test_normal_frame);
+    CU_add_test(suite, "Spare bonus                       ", test_spare_bonus);
+    CU_add_test(suite, "Strike bonus                      ", test_strike_bonus);
+    CU_add_test(suite, "Double strike bonus               ", test_double_strike_bonus);
+    CU_add_test(suite, "10th frame spare                  ", test_tenth_frame_spare);
+    CU_add_test(suite, "10th frame strike                 ", test_tenth_frame_strike);
 
     // CU_add_test(suite, "Edge Case Test: invalid frame index", test_invalid_frame_index);
     // CU_add_test(suite, "Edge Case Test: null frame pointer", test_null_frame_pointer);
     CU_add_test(suite, "Edge Case Test: maximum pin values", test_maximum_pin_values);
 
-    CU_add_test(suite, "Randomized Frame Sequence", test_random_game_sequence);
+    CU_add_test(suite, "Randomized Frame Sequence         ", test_random_game_sequence);
 
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
