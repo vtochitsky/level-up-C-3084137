@@ -12,7 +12,7 @@ void calc_score(frame_t *frames, int i)
     switch (frames[f].state)
     {
     case (NOEXEC):
-      frames[f].total = frames[f].first + previous_total;
+      frames[f].total = previous_total + frames[f].first;
       if (10 == frames[f].first)
       {
         frames[f].state = STRIKE1;
@@ -22,25 +22,25 @@ void calc_score(frame_t *frames, int i)
         frames[f].state = FIRST;
       }
       break;
-    case (FIRST):
-      frames[f].total = frames[f].first + previous_total + frames[f].second;
-      if (10 == (frames[f].first + frames[f].second))
-      {
-        frames[f].state = SPARE;
-      }
-      else
-      {
-        frames[f].total += frames[f].third;
-        frames[f].state = DONE;
-      }
-      break;
-    case (SPARE):
-      frames[f].total += frames[f + 1].first; // f+1 !!!
-      frames[f].total += frames[f].third;
-      frames[f].state = DONE;
-      break;
+    // case (FIRST):
+    //   frames[f].total = frames[f].first + previous_total + frames[f].second;
+    //   if (10 == (frames[f].first + frames[f].second))
+    //   {
+    //     frames[f].state = SPARE;
+    //   }
+    //   else
+    //   {
+    //     frames[f].total += frames[f].third;
+    //     frames[f].state = DONE;
+    //   }
+    //   break;
+    // case (SPARE):
+    //   frames[f].total += frames[f + 1].first; // f+1 !!!
+    //   frames[f].total += frames[f].third;
+    //   frames[f].state = DONE;
+    //   break;
     case (STRIKE1):
-      frames[f].total += frames[f + 1].first; // f+1 !!!
+      frames[f].total = frames[f].total + frames[f + 1].first; // f+1 !!! NOT FOR the last frame
       frames[f].state = STRIKE2;
       break;
     case (STRIKE2):
@@ -52,8 +52,8 @@ void calc_score(frame_t *frames, int i)
       {
         second_roll = frames[f + 1].second;
       }
-      frames[f].total += second_roll;
-      frames[f].total += frames[f].third;
+      frames[f].total = frames[f].total + second_roll;
+      frames[f].total += frames[f].third; // FOR the last frame 10 ...
       frames[f].state = DONE;
       break;
     case (DONE):
