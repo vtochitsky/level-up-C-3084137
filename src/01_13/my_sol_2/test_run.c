@@ -1,17 +1,19 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "calc_frames.h"
+#include "calc_scr.h"
+
+#define NFRAMES 10
 
 void test_normal_frame0_a(void)
 {
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 3;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 3);
 
     frames[0].second = 4;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 7);
 }
 
@@ -20,11 +22,11 @@ void test_normal_frame0_b(void)
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 5);
 
     frames[0].second = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10);
 }
 
@@ -33,20 +35,20 @@ void test_normal_frame1_a(void)
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 2;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 2);
 
     frames[0].second = 7;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 9);
 
     frames[1].first = 3;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 12);
 
     frames[1].second = 6;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 18);
 }
@@ -56,20 +58,20 @@ void test_normal_frame1_b(void)
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 2;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 2);
 
     frames[0].second = 7;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 9);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 
     frames[1].second = 0;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 }
@@ -79,31 +81,31 @@ void test_normal_frame2_a(void)
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 2;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 2);
 
     frames[0].second = 7;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 9);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 
     frames[1].second = 0;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 
     frames[2].first = 5;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 18);
 
     frames[2].second = 2;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 20);
@@ -114,44 +116,44 @@ void test_normal_frame3_a(void)
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 2;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 2);
 
     frames[0].second = 7;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 9);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 
     frames[1].second = 0;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
 
     frames[2].first = 5;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 18);
 
     frames[2].second = 2;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 20);
 
     frames[3].first = 0;
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 20);
     CU_ASSERT_EQUAL(frames[3].total, 20);
 
     frames[3].second = 2;
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 9);
     CU_ASSERT_EQUAL(frames[1].total, 13);
     CU_ASSERT_EQUAL(frames[2].total, 20);
@@ -165,12 +167,12 @@ void test_normal_frame10_a(void)
     for (int i = 0; i < 10; i++)
     {
         frames[i].first = 1;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
         // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 0;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
         // printf("%d %d\n", i, frames[i].total);
     }
@@ -183,12 +185,12 @@ void test_normal_frame10_b(void)
     for (int i = 0; i < 10; i++)
     {
         frames[i].first = 0;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i);
         // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 1;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
         // printf("%d %d\n", i, frames[i].total);
     }
@@ -201,12 +203,12 @@ void test_normal_frame10_c(void)
     for (int i = 0; i < 10; i++)
     {
         frames[i].first = 1;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i * 2 + 1);
         // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 1;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i * 2 + 2);
         // printf("%d %d\n", i, frames[i].total);
     }
@@ -219,12 +221,12 @@ void test_normal_frame10_d(void)
     for (int i = 0; i < 10; i++)
     {
         frames[i].first = 4;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, 4 * (i + 1) + 5 * i);
         // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 5;
-        calc_frame_table(frames, NFRAMES, i);
+        calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, 4 * (i + 1) + 5 * (i + 1));
         // printf("%d %d\n", i, frames[i].total);
     }
@@ -235,22 +237,22 @@ void test_spare_bonus_a(void) // spare, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 5); // 5 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
 
     frames[0].second = 5; // spare
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // 10 + 4
     CU_ASSERT_EQUAL(frames[1].total, 18); // 14 + 4
 
     frames[1].second = 2;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 20); // 18 + 2
 }
@@ -260,33 +262,33 @@ void test_spare_bonus_b(void) // spare, spare, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 5); // 5 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
 
     frames[0].second = 5; // spare
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // 10 + 4
     CU_ASSERT_EQUAL(frames[1].total, 18); // 14 + 4
 
     frames[1].second = 6; // spare again
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 24); // 18 + 6 yet
 
     frames[2].first = 1;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 25); // 24 + 1
     CU_ASSERT_EQUAL(frames[2].total, 26); // 25 + 1
 
     frames[2].second = 4;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 25); // not changed
     CU_ASSERT_EQUAL(frames[2].total, 30); // 26 + 4
@@ -297,56 +299,56 @@ void test_spare_bonus_c(void) // spare, normal, spare, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 5); // 5 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[0].second = 5; // spare
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[1].first = 4;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // 10 + 4
     CU_ASSERT_EQUAL(frames[1].total, 18); // 14 + 4
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[1].second = 5; // normal
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 23); // 18 + 5 yet
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[2].first = 1;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 23); // not changed
     CU_ASSERT_EQUAL(frames[2].total, 24); // 23 + 1
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[2].second = 9; // spare
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 23); // not changed
     CU_ASSERT_EQUAL(frames[2].total, 33); // 24 + 9 yet
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[3].first = 7;
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 23); // not changed
     CU_ASSERT_EQUAL(frames[2].total, 40); // 33 + 7
     CU_ASSERT_EQUAL(frames[3].total, 47); // 40 + 7
 
     frames[3].second = 3; // normal
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 14); // not changed
     CU_ASSERT_EQUAL(frames[1].total, 23); // not changed
     CU_ASSERT_EQUAL(frames[2].total, 40); // not changed
@@ -358,11 +360,11 @@ void test_spare_bonus_d(void) // spare
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 5;
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 5); // 5 yet
 
     frames[0].second = 5; // spare
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
 }
 
@@ -371,17 +373,17 @@ void test_strike_bonus_a(void) // strike, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
 
     frames[1].first = 3;
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 13); // 10 + 3 yet
     CU_ASSERT_EQUAL(frames[1].total, 16); // 13 + 3 yet
 
     frames[1].second = 6; // normal
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 19); // 13 + 6
     CU_ASSERT_EQUAL(frames[1].total, 28); // 19 + 3 + 6
 }
@@ -391,25 +393,25 @@ void test_strike_bonus_b(void) // strike, strike, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
     CU_ASSERT_EQUAL(frames[2].total, 0);
 
     frames[1].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 20); // 20 yet
     CU_ASSERT_EQUAL(frames[1].total, 30); // 20 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 0);
 
     frames[2].first = 3;
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 23); // 20 + 3 stop
     CU_ASSERT_EQUAL(frames[1].total, 33); // 30 + 3
     CU_ASSERT_EQUAL(frames[2].total, 36); // 33 + 3
 
     frames[2].second = 5; // normal
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 23); //
     CU_ASSERT_EQUAL(frames[1].total, 38); // 33 + 5
     CU_ASSERT_EQUAL(frames[2].total, 46); // 38 + 3 + 5
@@ -420,21 +422,21 @@ void test_strike_bonus_c(void) // strike, strike, strike
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[1].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 20); // 10 + 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 30); // 20 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[2].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 30); // 20 + 10 stop
     CU_ASSERT_EQUAL(frames[1].total, 50); // 30 + 10 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 60); // 50 + 10 yet
@@ -446,21 +448,21 @@ void test_strike_bonus_d(void) // strike, strike, strike, normal
     frame_t frames[NFRAMES] = {0};
 
     frames[0].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 0);
+    calc_score(frames, 0);
     CU_ASSERT_EQUAL(frames[0].total, 10); // 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 0);
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[1].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 1);
+    calc_score(frames, 1);
     CU_ASSERT_EQUAL(frames[0].total, 20); // 10 + 10 yet
     CU_ASSERT_EQUAL(frames[1].total, 30); // 20 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 0);
     CU_ASSERT_EQUAL(frames[3].total, 0);
 
     frames[2].first = 10; // strike
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 2);
     CU_ASSERT_EQUAL(frames[0].total, 30); // 20 + 10 stop
     CU_ASSERT_EQUAL(frames[1].total, 50); // 30 + 10 + 10 yet
     CU_ASSERT_EQUAL(frames[2].total, 60); // 50 + 10 yet
@@ -469,14 +471,14 @@ void test_strike_bonus_d(void) // strike, strike, strike, normal
     printf("%d %d\n", 2, frames[2].total);
 
     frames[3].first = 4;
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 30); // no change
     CU_ASSERT_EQUAL(frames[1].total, 54); // 40 + 10 + 4 stop
     CU_ASSERT_EQUAL(frames[2].total, 68); //
     CU_ASSERT_EQUAL(frames[3].total, 72); //
 
     frames[3].second = 5; // normal
-    calc_frame_table(frames, NFRAMES, 3);
+    calc_score(frames, 3);
     CU_ASSERT_EQUAL(frames[0].total, 30); //
     CU_ASSERT_EQUAL(frames[1].total, 54); //
     CU_ASSERT_EQUAL(frames[2].total, 73); //
@@ -491,9 +493,9 @@ void test_double_strike_bonus(void)
     frames[2].first = 4;
     frames[2].second = 3;
 
-    calc_frame_table(frames, NFRAMES, 0);
-    calc_frame_table(frames, NFRAMES, 1);
-    calc_frame_table(frames, NFRAMES, 2);
+    calc_score(frames, 0);
+    calc_score(frames, 1);
+    calc_score(frames, 2);
 
     CU_ASSERT_EQUAL(frames[0].total, 24); // 10 + 10 + 4
     CU_ASSERT_EQUAL(frames[1].total, 41); // 10 + 4 + 3 + 24
@@ -507,7 +509,7 @@ void test_tenth_frame_spare(void)
     frames[9].second = 3; // spare
     frames[9].third = 5;
 
-    calc_frame_table(frames, NFRAMES, 9);
+    calc_score(frames, 9);
 
     CU_ASSERT_EQUAL(frames[9].total, 15); // 7 + 3 + 5
 }
@@ -519,7 +521,7 @@ void test_tenth_frame_strike(void)
     frames[9].second = 10;
     frames[9].third = 10;
 
-    calc_frame_table(frames, NFRAMES, 9);
+    calc_score(frames, 9);
 
     CU_ASSERT_EQUAL(frames[9].total, 30); // 10 + 10 + 10
 }
