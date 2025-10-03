@@ -1332,14 +1332,15 @@ void test_mixed_heavy(void)
     CU_ASSERT_EQUAL(frames[8].total, 103);
 }
 
-/* --- 9 and 10th --- */
+/* --- 10th --- */
 void test_tenth_frame_spare(void)
 {
     frame_t frames[NFRAMES] = {0};
     frames[9].first = 7;
+    calc_score(frames, 9);
     frames[9].second = 3; // spare
+    calc_score(frames, 9);
     frames[9].third = 5;
-
     calc_score(frames, 9);
 
     CU_ASSERT_EQUAL(frames[9].total, 15); // 7 + 3 + 5
@@ -1349,13 +1350,16 @@ void test_tenth_frame_strike(void)
 {
     frame_t frames[NFRAMES] = {0};
     frames[9].first = 10; // strike
+    calc_score(frames, 9);
     frames[9].second = 10;
+    calc_score(frames, 9);
     frames[9].third = 10;
-
     calc_score(frames, 9);
 
     CU_ASSERT_EQUAL(frames[9].total, 30); // 10 + 10 + 10
 }
+
+/* --- 9 and 10th --- */
 
 int main()
 {
@@ -1368,11 +1372,13 @@ int main()
     }
 
     /* add a suites to the registry */
-    CU_pSuite pSuite1, pSuite2, pSuite3, pSuite4;
+    CU_pSuite pSuite1, pSuite2, pSuite3, pSuite4, pSuite5, pSuite6;
     if (NULL == (pSuite1 = CU_add_suite("Normal frames i.e. less then spare and strike", 0, 0)) ||
         NULL == (pSuite2 = CU_add_suite("Spare bonus frames", 0, 0)) ||
         NULL == (pSuite3 = CU_add_suite("Strike bonus frames", 0, 0)) ||
-        NULL == (pSuite4 = CU_add_suite("Mixed frames", 0, 0)))
+        NULL == (pSuite4 = CU_add_suite("Mixed frames", 0, 0)) ||
+        NULL == (pSuite5 = CU_add_suite("10th frame", 0, 0)) ||
+        NULL == (pSuite6 = CU_add_suite("9 and 10th frames", 0, 0)))
     {
         puts("CU_add_suites ' error");
         puts(CU_get_error_msg());
@@ -1451,16 +1457,24 @@ int main()
         CU_cleanup_registry();
         return CU_get_error();
     }
+    /* add a tests to the suite */
+    if (NULL == CU_add_test(pSuite5, "tenth frame spare", test_tenth_frame_spare) ||
+        NULL == CU_add_test(pSuite5, "tenth frame strike", test_tenth_frame_strike))
+    {
+        puts("CU_add_test to '10th frame' suite");
+        puts(CU_get_error_msg());
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
 
-    // CU_add_test(suite, "10th frame spare", test_tenth_frame_spare);
-    // CU_add_test(suite, "10th frame strike", test_tenth_frame_strike);
-
+    /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
-    CU_basic_run_tests();
+    // CU_basic_run_tests();
     // CU_basic_run_suite(pSuite1);
     // CU_basic_run_suite(pSuite2);
     // CU_basic_run_suite(pSuite3);
     // CU_basic_run_suite(pSuite4);
+    CU_basic_run_suite(pSuite5);
 
     CU_cleanup_registry();
     return CU_get_error();
