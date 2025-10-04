@@ -35,15 +35,33 @@ void calc_score(frame_t *frames, int i)
       }
       break;
     case (SPARE):
+      if (f == 9) // the last frame
+      {
+        frames[f].total = previous_total + frames[f].first + frames[f].second + frames[f].third;
+        frames[f].state = DONE;
+        break;
+      }
       frames[f].total += frames[f + 1].first; // f+1 !!!
       frames[f].total += frames[f].third;
       frames[f].state = DONE;
       break;
     case (STRIKE1):
+      if (f == 9) // the last frame
+      {
+        frames[f].total = previous_total + frames[f].first + frames[f].second;
+        frames[f].state = STRIKE2;
+        break;
+      }
       frames[f].total = previous_total + frames[f].first + frames[f + 1].first; // f+1 !!! NOT FOR the last frame
       frames[f].state = STRIKE2;
       break;
     case (STRIKE2):
+      if (f == 9) // the last frame
+      {
+        frames[f].total = previous_total + frames[f].first + frames[f].second + frames[f].third;
+        frames[f].state = DONE;
+        break;
+      }
       if (STRIKE1 == frames[f + 1].state)
       {
         second_roll = frames[f + 2].first;

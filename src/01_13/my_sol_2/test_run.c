@@ -1333,6 +1333,18 @@ void test_mixed_heavy(void)
 }
 
 /* --- 10th --- */
+void test_tenth_frame_normal(void)
+{
+    frame_t frames[NFRAMES] = {0};
+    frames[9].first = 4;
+    calc_score(frames, 9);
+    frames[9].second = 5;
+    calc_score(frames, 9);
+    // no third roll
+
+    CU_ASSERT_EQUAL(frames[9].total, 9); // 4 + 5
+}
+
 void test_tenth_frame_spare(void)
 {
     frame_t frames[NFRAMES] = {0};
@@ -1458,7 +1470,8 @@ int main()
         return CU_get_error();
     }
     /* add a tests to the suite */
-    if (NULL == CU_add_test(pSuite5, "tenth frame spare", test_tenth_frame_spare) ||
+    if (NULL == CU_add_test(pSuite5, "tenth frame normal", test_tenth_frame_normal) ||
+        NULL == CU_add_test(pSuite5, "tenth frame spare", test_tenth_frame_spare) ||
         NULL == CU_add_test(pSuite5, "tenth frame strike", test_tenth_frame_strike))
     {
         puts("CU_add_test to '10th frame' suite");
