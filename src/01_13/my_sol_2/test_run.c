@@ -169,12 +169,10 @@ void test_normal_frame10_a(void)
         frames[i].first = 1;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
-        // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 0;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
-        // printf("%d %d\n", i, frames[i].total);
     }
 }
 
@@ -187,12 +185,10 @@ void test_normal_frame10_b(void)
         frames[i].first = 0;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i);
-        // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 1;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i + 1);
-        // printf("%d %d\n", i, frames[i].total);
     }
 }
 
@@ -205,12 +201,10 @@ void test_normal_frame10_c(void)
         frames[i].first = 1;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i * 2 + 1);
-        // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 1;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, i * 2 + 2);
-        // printf("%d %d\n", i, frames[i].total);
     }
 }
 
@@ -223,12 +217,10 @@ void test_normal_frame10_d(void)
         frames[i].first = 4;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, 4 * (i + 1) + 5 * i);
-        // printf("%d %d\n", i, frames[i].total);
 
         frames[i].second = 5;
         calc_score(frames, i);
         CU_ASSERT_EQUAL(frames[i].total, 4 * (i + 1) + 5 * (i + 1));
-        // printf("%d %d\n", i, frames[i].total);
     }
 }
 
@@ -1720,21 +1712,6 @@ int main()
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
-    
-    // CU_basic_run_suite(pSuite1);
-    // CU_basic_run_suite(pSuite2);
-    // CU_basic_run_suite(pSuite3);
-    // CU_basic_run_suite(pSuite4);
-    // CU_basic_run_suite(pSuite5);
-    // CU_basic_run_suite(pSuite6);
-
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth open", test_ninth_and_tenth_open));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth spare", test_ninth_and_tenth_spare));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth strike", test_ninth_and_tenth_strike));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth spare", test_ninth_strike_tenth_spare));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth spare tenth strike", test_ninth_spare_tenth_strike));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth normal", test_ninth_strike_tenth_normal));
-    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth spare tenth normal", test_ninth_spare_tenth_normal));
 
     CU_cleanup_registry();
     return CU_get_error();
