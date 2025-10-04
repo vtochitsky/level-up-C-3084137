@@ -1486,25 +1486,21 @@ void test_ninth_and_tenth_strike(void)
     frames[8].first = 10; // strike
     calc_score(frames, 8);
     CU_ASSERT_EQUAL(frames[8].total, 10);
-    printf("\n%d %d\n", frames[8].total, frames[9].total);
 
     frames[9].first = 10; // strike
     calc_score(frames, 9);
     CU_ASSERT_EQUAL(frames[8].total, 20);
     CU_ASSERT_EQUAL(frames[9].total, 30);
-    printf("%d %d\n", frames[8].total, frames[9].total);
 
     frames[9].second = 10; // strike
     calc_score(frames, 9);
     CU_ASSERT_EQUAL(frames[8].total, 30);
     CU_ASSERT_EQUAL(frames[9].total, 50);
-    printf("%d %d\n", frames[8].total, frames[9].total);
 
     frames[9].third = 10; // strike
     calc_score(frames, 9);
     CU_ASSERT_EQUAL(frames[8].total, 30);
     CU_ASSERT_EQUAL(frames[9].total, 60);
-    printf("%d %d\n", frames[8].total, frames[9].total);
 }
 
 void test_ninth_strike_tenth_spare(void)
@@ -1723,7 +1719,7 @@ int main()
 
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
-    // CU_basic_run_tests();
+    CU_basic_run_tests();
     // CU_basic_run_suite(pSuite1);
     // CU_basic_run_suite(pSuite2);
     // CU_basic_run_suite(pSuite3);
@@ -1732,7 +1728,7 @@ int main()
     // CU_basic_run_suite(pSuite6);
     // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth open", test_ninth_and_tenth_open));
     // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth spare", test_ninth_and_tenth_spare));
-    CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth strike", test_ninth_and_tenth_strike));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth strike", test_ninth_and_tenth_strike));
     // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth spare", test_ninth_strike_tenth_spare));
     // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth spare tenth strike", test_ninth_spare_tenth_strike));
     // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth normal", test_ninth_strike_tenth_normal));

@@ -71,7 +71,14 @@ void calc_score(frame_t *frames, int i)
       }
       if (STRIKE1 == frames[f + 1].state)
       {
-        second_roll = frames[f + 2].first;
+        if (f + 1 == 9) // the last frame
+        {
+          second_roll = frames[f + 1].second; 
+        }
+        else
+        {
+          second_roll = frames[f + 2].first;
+        }
       }
       else
       {
