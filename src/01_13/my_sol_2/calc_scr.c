@@ -1,5 +1,12 @@
 #include "calc_scr.h"
 
+/*
+Calculates the score for a bowling game for the given frame index `i`.
+It should be called each time a roll is made to update the scores accordingly!
+Args:
+  frames: An array of frame_t structures representing the frames of the game.
+  i: The index of the current frame (0-based).
+*/
 void calc_score(frame_t *frames, int i)
 {
   int previous_total = 0;

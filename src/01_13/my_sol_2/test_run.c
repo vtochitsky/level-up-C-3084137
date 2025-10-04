@@ -1336,42 +1336,265 @@ void test_mixed_heavy(void)
 void test_tenth_frame_normal(void)
 {
     frame_t frames[NFRAMES] = {0};
+
     frames[9].first = 4;
     calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 4);
+
     frames[9].second = 5;
     calc_score(frames, 9);
-    // no third roll
-
     CU_ASSERT_EQUAL(frames[9].total, 9); // 4 + 5
+
+    // no third roll
 }
 
 void test_tenth_frame_spare(void)
 {
     frame_t frames[NFRAMES] = {0};
+
     frames[9].first = 7;
     calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 7);
+
     frames[9].second = 3; // spare
     calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 10); // 7 + 3
+
     frames[9].third = 5;
     calc_score(frames, 9);
-
     CU_ASSERT_EQUAL(frames[9].total, 15); // 7 + 3 + 5
 }
 
 void test_tenth_frame_strike(void)
 {
     frame_t frames[NFRAMES] = {0};
+
     frames[9].first = 10; // strike
     calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 10);
+
     frames[9].second = 10;
     calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 20); // 10 + 10
+
     frames[9].third = 10;
     calc_score(frames, 9);
-
     CU_ASSERT_EQUAL(frames[9].total, 30); // 10 + 10 + 10
 }
 
+void test_tenth_frame_strike_then_normal(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[9].first = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 10);
+
+    frames[9].second = 3;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 13); // 10 + 3
+
+    frames[9].third = 6;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 19); // 10 + 3 + 6
+}
+
+void test_tenth_frame_spare_then_strike(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[9].first = 4;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 4);
+
+    frames[9].second = 6; // spare
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 10); // 4 + 6
+
+    frames[9].third = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 20); // 4 + 6 + 10
+}
+
+void test_tenth_frame_strike_then_spare(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[9].first = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 10);
+
+    frames[9].second = 7;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 17); // 10 + 7
+
+    frames[9].third = 3; // spare
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 20); // 10 + 7 + 3
+}
+
 /* --- 9 and 10th --- */
+
+void test_ninth_and_tenth_open(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 3;
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 3);
+    frames[8].second = 5; // 8
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 8);
+
+    frames[9].first = 4;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 12); // 8 + 4
+    frames[9].second = 4;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 16); // 12 + 4
+}
+
+void test_ninth_and_tenth_spare(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 6;
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 6);
+
+    frames[8].second = 4; // spare
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+
+    frames[9].first = 3;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 16); // 10 + 3 + 3
+
+    frames[9].second = 7; // spare
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 23); // 16 + 7
+
+    frames[9].third = 5;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[9].total, 28); // 23 + 5
+}
+
+void test_ninth_and_tenth_strike(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 10; // strike
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+    printf("\n%d %d\n", frames[8].total, frames[9].total);
+
+    frames[9].first = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 20);
+    CU_ASSERT_EQUAL(frames[9].total, 30);
+    printf("%d %d\n", frames[8].total, frames[9].total);
+
+    frames[9].second = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 30);
+    CU_ASSERT_EQUAL(frames[9].total, 50);
+    printf("%d %d\n", frames[8].total, frames[9].total);
+
+    frames[9].third = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 30);
+    CU_ASSERT_EQUAL(frames[9].total, 60);
+    printf("%d %d\n", frames[8].total, frames[9].total);
+}
+
+void test_ninth_strike_tenth_spare(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 10; // strike
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+
+    frames[9].first = 7;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 17); // 10 + 7
+    CU_ASSERT_EQUAL(frames[9].total, 24); // 17 + 7
+
+    frames[9].second = 3; // spare
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 20); // 17 + 3
+    CU_ASSERT_EQUAL(frames[9].total, 30); // 20 + 7 + 3
+
+    frames[9].third = 5;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 20);
+    CU_ASSERT_EQUAL(frames[9].total, 35); // 30 + 5
+}
+
+void test_ninth_spare_tenth_strike(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 6;
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 6);
+
+    frames[8].second = 4; // spare
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+
+    frames[9].first = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 20);
+    CU_ASSERT_EQUAL(frames[9].total, 30); // 20 + 10
+
+    frames[9].second = 10; // strike
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 20);
+    CU_ASSERT_EQUAL(frames[9].total, 40); // 30 + 10
+}
+
+void test_ninth_strike_tenth_normal(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 10; // strike
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+
+    frames[9].first = 3;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 13); // 10 + 3
+    CU_ASSERT_EQUAL(frames[9].total, 16); // 13 + 3
+
+    frames[9].second = 6; // normal
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 19); // 13 + 6
+    CU_ASSERT_EQUAL(frames[9].total, 28); // 19 + 3 + 6
+}
+
+void test_ninth_spare_tenth_normal(void)
+{
+    frame_t frames[NFRAMES] = {0};
+
+    frames[8].first = 6;
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 6);
+
+    frames[8].second = 4; // spare
+    calc_score(frames, 8);
+    CU_ASSERT_EQUAL(frames[8].total, 10);
+
+    frames[9].first = 3;
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 13); // 10 + 3
+    CU_ASSERT_EQUAL(frames[9].total, 16); // 13 + 3
+
+    frames[9].second = 6; // normal
+    calc_score(frames, 9);
+    CU_ASSERT_EQUAL(frames[8].total, 13); // unchanged
+    CU_ASSERT_EQUAL(frames[9].total, 22); // 16 + 6
+}
 
 int main()
 {
@@ -1472,9 +1695,27 @@ int main()
     /* add a tests to the suite */
     if (NULL == CU_add_test(pSuite5, "tenth frame normal", test_tenth_frame_normal) ||
         NULL == CU_add_test(pSuite5, "tenth frame spare", test_tenth_frame_spare) ||
-        NULL == CU_add_test(pSuite5, "tenth frame strike", test_tenth_frame_strike))
+        NULL == CU_add_test(pSuite5, "tenth frame strike", test_tenth_frame_strike) ||
+        NULL == CU_add_test(pSuite5, "tenth frame strike then normal", test_tenth_frame_strike_then_normal) ||
+        NULL == CU_add_test(pSuite5, "tenth frame spare then strike", test_tenth_frame_spare_then_strike) ||
+        NULL == CU_add_test(pSuite5, "tenth frame strike then spare", test_tenth_frame_strike_then_spare))
     {
         puts("CU_add_test to '10th frame' suite");
+        puts(CU_get_error_msg());
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+
+    /* add a tests to the suite */
+    if (NULL == CU_add_test(pSuite6, "ninth and tenth open", test_ninth_and_tenth_open) ||
+        NULL == CU_add_test(pSuite6, "ninth and tenth spare", test_ninth_and_tenth_spare) ||
+        NULL == CU_add_test(pSuite6, "ninth and tenth strike", test_ninth_and_tenth_strike) ||
+        NULL == CU_add_test(pSuite6, "ninth strike tenth spare", test_ninth_strike_tenth_spare) ||
+        NULL == CU_add_test(pSuite6, "ninth spare tenth strike", test_ninth_spare_tenth_strike) ||
+        NULL == CU_add_test(pSuite6, "ninth strike tenth normal", test_ninth_strike_tenth_normal) ||
+        NULL == CU_add_test(pSuite6, "ninth spare tenth normal", test_ninth_spare_tenth_normal))
+    {
+        puts("CU_add_test to '9 and 10th frames' suite");
         puts(CU_get_error_msg());
         CU_cleanup_registry();
         return CU_get_error();
@@ -1487,7 +1728,15 @@ int main()
     // CU_basic_run_suite(pSuite2);
     // CU_basic_run_suite(pSuite3);
     // CU_basic_run_suite(pSuite4);
-    CU_basic_run_suite(pSuite5);
+    // CU_basic_run_suite(pSuite5);
+    // CU_basic_run_suite(pSuite6);
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth open", test_ninth_and_tenth_open));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth spare", test_ninth_and_tenth_spare));
+    CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth and tenth strike", test_ninth_and_tenth_strike));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth spare", test_ninth_strike_tenth_spare));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth spare tenth strike", test_ninth_spare_tenth_strike));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth strike tenth normal", test_ninth_strike_tenth_normal));
+    // CU_basic_run_test(pSuite6, CU_add_test(pSuite6, "test ninth spare tenth normal", test_ninth_spare_tenth_normal));
 
     CU_cleanup_registry();
     return CU_get_error();
