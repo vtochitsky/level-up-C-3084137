@@ -13,3 +13,6 @@ Algebraic form
 Continued fraction
 
 Ф= 1+1/(1+1/(1+1/(1+1/(1+...))))
+
+
+Ф + 1 = Ф*Ф 
