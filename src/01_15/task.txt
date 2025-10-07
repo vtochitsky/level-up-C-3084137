@@ -1,0 +1,4 @@
+Word wrap was so unique to early computers that it was considered a software feature boasted about on the box. Today we take word wrap for granted. It's not a huge deal. In fact, you can write a word wrapping program yourself. for this challenge, you'll use C to write code that wraps text by the word. The width is 40 characters wide by default. At this position, any word straddling the width is output at the start of the next line, and so on for every line of text. The wrap width can also be set by supplying a command line argument, so it must be variable. Use the wordwrap_challenge.c source code in the exercise files, which provides a skeleton to start your coding, including sample text to wrap. Pause the video now to complete this challenge on your own. Resume when you're ready to view my solution. 
+
+- set the dafult wrapping width to 40 characters.
+- wrap width can be set by command-line argument
