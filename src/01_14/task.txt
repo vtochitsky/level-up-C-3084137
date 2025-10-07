@@ -1,0 +1,15 @@
+Calculating the golden ratio
+
+The golden ratio is so useful and common in mathematics that it has its own symbol. The Greek letter phi. In this challenge, use a recursive function to calculate the golden ratio. Explaining how this ratio works and why it's golden requires some (clearing throat) math. The mathematical expression for the golden ratio is a plus b divided by a, which is equal to a over b. Well, it's easier to draw. Here you see two rectangles with widths a and b. If I relocate b relative to a, the ratio now between b and what's left of a, the green part, remains the golden ratio. This is the same as the original ratio between a and b. This type of relationship appears often in nature, such as the ratio of your height to the elevation of your belly button. One way the geniuses expressed the golden ratio is this mathematical construction. One plus the square root of five divided by two. You could use this math to calculate phi in a C program, but I want more from you. I want you to instead use this calculation. This monster is known as a continued fraction. Scary, but you can code it in C by using recursion. And that's your challenge. Use a recursive function to calculate the golden ratio. The continued fraction shown here is your inspiration. Pause the video now to try this challenge on your own. Resume the video to view my solution.
+
+Decimal
+
+1.618033988749894...
+
+Algebraic form
+
+Ф=(1+sqrt(5))/2
+
+Continued fraction
+
+Ф= 1+1/(1+1/(1+1/(1+1/(1+...))))
