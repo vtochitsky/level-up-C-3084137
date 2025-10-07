@@ -15,11 +15,16 @@ Continued fraction
 Ф= 1+1/(1+1/(1+1/(1+1/(1+...))))
 
 
+
+
 Ф + 1 = Ф*Ф ----> divided by Ф ----> 1 + 1/Ф = Ф
 
 so
 
 1 + 1/Ф = Ф
+
+also
+Ф + 1 = Ф*Ф --->  can be rearranged to Ф*Ф - Ф - 1 = 0 The quadratic formula yields two solutions: ... 
 
 
 In general:
