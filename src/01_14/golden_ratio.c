@@ -18,7 +18,9 @@ const long double Phi = 1.6180339887498948482045868343656381177L;
 
 long double calc_golden(size_t count);
 long double func_phi(long double g, int precision); /* modified function from solution */
+#ifdef __QUAD_MATH__
 __float128 func_phi_qp(__float128 g, int precision);
+#endif
 
 int main()
 {
