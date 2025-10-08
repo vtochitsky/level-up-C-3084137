@@ -5,7 +5,9 @@
 #include <math.h>  // for sqrtl()
 #include <float.h> // for LDBL_DIG and LDBL_EPSILON
 
+#ifdef __QUAD_MATH__
 #include <quadmath.h> // for __float128 if needed only for GCC
+#endif
 
 // The golden ratio constant to high precision (but longer than needed for 'long double' precision)
 // Source: https://oeis.org/A001622
@@ -50,6 +52,7 @@ int main()
   else
     printf("The function from solution calculation is NOT correct within LDBL_EPSILON (%Le)\n", LDBL_EPSILON);
 
+#if __QUAD_MATH__
   // Now try to use __float128 if available (only for GCC)
   printf("\nNow try to use __float128 if available (only for GCC):\n");
   // __float128 can provide about 34 decimal digits of precision
@@ -58,6 +61,7 @@ int main()
   char buf[128];
   quadmath_snprintf(buf, sizeof(buf), "%.35Qf", func_phi_qp(1.0Q, 1000)); // link with -lquadmath  !!!!
   printf("__float128: %s\n", buf);
+#endif
 
   return 0;
 }
@@ -77,10 +81,12 @@ long double func_phi(long double g, int precision)
   return (g);
 }
 
-// only for GCC , link it with -lquadmath   !!!
-__float128 func_phi_qp(__float128 g, int precision)
+#ifdef __QUAD_MATH__
+    // only for GCC , link it with -lquadmath   !!!
+    __float128 func_phi_qp(__float128 g, int precision)
 {
   if (precision)
     return (g + 1 / func_phi_qp(g, precision - 1));
   return (g);
 }
+#endif
