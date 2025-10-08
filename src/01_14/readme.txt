@@ -1,0 +1,1 @@
+I've built and check it on MSYS2 GCC, MSYS2 Clang, Windows DigitalMars, MVS 2022 (dev console), termux
