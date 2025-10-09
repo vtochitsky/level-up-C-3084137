@@ -5,7 +5,7 @@
 #define W_MIN 16
 #define W_DEFAULT 40
 
-void wordwrap(char *text, const unsigned int width);
+void wordwrap(FILE *file, char *text, const unsigned int width, const int option);
 
 int main(int argc, char *argv[])
 {
@@ -45,14 +45,16 @@ So long lives this, and this gives life to thee.";
 	// 	runner++;
 	// }
 
-	unsigned int width = 40u;
+	unsigned int width = 10u; // TODO: fix BUG
+	// unsigned int width = 30u;
+	unsigned int opt = 0;
 
-	wordwrap(text, width);
+	wordwrap(stdout, text, width, opt);
 
 	return (0);
 }
 
-void wordwrap(char *text, const unsigned int width)
+void wordwrap(FILE *file, char *text, const unsigned int width, const int option)
 {
 	unsigned int line_length = 0u;
 	char *line_start = text;
@@ -67,14 +69,28 @@ void wordwrap(char *text, const unsigned int width)
 		}
 
 		/* go back till character is alpha or digit */
-		while (isalnum(*(line_start + line_length - 1)))
+		while (line_length > 0 && isalnum(*(line_start + line_length - 1)))
 		{
 			line_length--;
 		}
+		// fprintf(stdout, "%d\n", line_length);
 
-		printf("%.*s\n", line_length, line_start);
-
-		line_start += line_length;
+		/* output for -n option */
+		if (1 == option)
+		{
+			do
+			{
+				if (*line_start != '\n')
+					putc(*line_start, file);
+				line_start++;
+			} while (--line_length);
+			putc('\n', file);
+		}
+		else /* output without -n option */
+		{
+			fprintf(file, "%.*s\n", line_length, line_start);
+			line_start += line_length;
+		}
 
 	} while (0 != *(line_start + line_length));
 }
