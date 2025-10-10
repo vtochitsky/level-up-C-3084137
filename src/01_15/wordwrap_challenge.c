@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <getopt.h>
 
 #define W_MAX 100
 #define W_MIN 16
 #define W_DEFAULT 40
+
+/*
+check that all characters are handled correctly
+
+files handling
+
+
+introduce options support
+*/
 
 void wordwrap(FILE *file, char *text, const unsigned int width, const int option);
 
@@ -46,18 +56,38 @@ So long lives this, and this gives life to thee.";
 	// 	runner++;
 	// }
 
-	// int width = 10u; // TODO: fix BUG
 	int width = W_DEFAULT;
 	int opt = 0;
+	char *fn = NULL;
+	FILE *file = NULL;
 
-	if (argc >= 2) // draft
+	int res = 0;
+
+	while (-1 != (res = getopt(argc, argv, "w:nf:")))
 	{
-		width = atoi(argv[1]);
+		switch (res)
+		{
+		case 'w':
+			width = atoi(optarg);
+			break;
+		case 'n':
+			opt = 1;
+			break;
+		case 'f':
+			fn = optarg;
+			break;
+		case '?':
+			fprintf(stderr, "option error\n"); // not nice to have this message printed out in general output
+			break;
+		default:
+			break;
+		}
 	}
 
-	if (argc == 3) // draft
+	if (NULL != fn)
 	{
-		opt = atoi(argv[2]);
+		// TODO: read the text from the file to memory
+		// text = ...
 	}
 
 	wordwrap(stdout, text, width, opt);
