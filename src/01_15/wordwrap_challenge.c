@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 #define W_MAX 100
@@ -45,9 +46,19 @@ So long lives this, and this gives life to thee.";
 	// 	runner++;
 	// }
 
-	unsigned int width = 10u; // TODO: fix BUG
-	// unsigned int width = 30u;
-	unsigned int opt = 0;
+	// int width = 10u; // TODO: fix BUG
+	int width = W_DEFAULT;
+	int opt = 0;
+
+	if (argc >= 2) // draft
+	{
+		width = atoi(argv[1]);
+	}
+
+	if (argc == 3) // draft
+	{
+		opt = atoi(argv[2]);
+	}
 
 	wordwrap(stdout, text, width, opt);
 
@@ -69,11 +80,15 @@ void wordwrap(FILE *file, char *text, const unsigned int width, const int option
 		}
 
 		/* go back till character is alpha or digit */
+		unsigned int len = line_length;
 		while (line_length > 0 && isalnum(*(line_start + line_length - 1)))
 		{
 			line_length--;
 		}
-		// fprintf(stdout, "%d\n", line_length);
+		if (0u == line_length)
+		{
+			line_length = len;
+		}
 
 		/* output for -n option */
 		if (1 == option)

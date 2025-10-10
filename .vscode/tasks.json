@@ -7,10 +7,11 @@
       "args": [
         "-fdiagnostics-color=always",
         "-g",
-        "*.c",
+        "${file}",
+        // "*.c",
         "-o",
         "${fileBasenameNoExtension}",
-        "-lcunit"
+        // "-lcunit"
       ],
       "options": {
         "cwd": "${fileDirname}"
