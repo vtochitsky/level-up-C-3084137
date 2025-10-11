@@ -17,6 +17,9 @@ introduce options support
 */
 
 void wordwrap(FILE *file, char *text, const unsigned int width, const int option);
+void word_wrap(char *input, char *output, const unsigned int width, const int option);
+
+void calc_stat(char *text, size_t *arr);
 
 int main(int argc, char *argv[])
 {
@@ -77,7 +80,7 @@ So long lives this, and this gives life to thee.";
 			fn = optarg;
 			break;
 		case '?':
-			fprintf(stderr, "option error\n"); // not nice to have this message printed out in general output
+			fprintf(stderr, "option error\n"); // TODO: not nice to have this message printed out in general output
 			break;
 		default:
 			break;
@@ -90,7 +93,19 @@ So long lives this, and this gives life to thee.";
 		// text = ...
 	}
 
+	size_t a_orig[256] = {
+			0,
+	};
+
+	calc_stat(text, a_orig);
+
 	wordwrap(stdout, text, width, opt);
+
+	// write to temporary file using tmpfile ???
+	// tmpfile() ??? it works wit file on disk...
+	// read such file and check
+	// size_t a_proc[256] = {0,};
+	// calc_stat(text,a_orig);
 
 	return (0);
 }
@@ -138,4 +153,18 @@ void wordwrap(FILE *file, char *text, const unsigned int width, const int option
 		}
 
 	} while (0 != *(line_start + line_length));
+}
+
+void calc_stat(char *text, size_t *arr)
+{
+	while (*text)
+	{
+		arr[(unsigned char)(*text)]++;
+		text++;
+	}
+}
+
+void word_wrap(char *input, char *output, const unsigned int width, const int option)
+{
+
 }
