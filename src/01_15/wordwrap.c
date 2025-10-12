@@ -47,8 +47,7 @@ So long lives this, and this gives life to thee.";
 			exit(EXIT_SUCCESS);
 			break;
 		case 'w':
-			char *endptr;
-			width = strtoull(optarg, &endptr, 10);
+			width = strtoull(optarg, NULL, 10);
 			break;
 		case 'n':
 			opt = 1;
