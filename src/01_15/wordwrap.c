@@ -5,11 +5,9 @@
 #include <getopt.h>
 #include <assert.h>
 
-#define W_MAX 100
-#define W_MIN 16
-#define W_DEFAULT 40
+#define W_DEFAULT 40u
 
-void word_wrap(char *input, char *output, const unsigned int width, const int option);
+void word_wrap(char *input, char *output, const size_t width, const int option);
 void calc_stat(char *text, size_t *arr);
 
 int main(int argc, char *argv[])
@@ -30,10 +28,10 @@ When in eternal lines to time thou grow'st:\n\
 So long as men can breathe or eyes can see, \
 So long lives this, and this gives life to thee.";
 
-	int width = W_DEFAULT;
+	size_t width = W_DEFAULT;
 	int opt = 0;
 	char *fn = NULL;
-	int out_buf_size = 0;
+	size_t out_buf_size = 0u;
 	int res = 0;
 
 	while (-1 != (res = getopt(argc, argv, "hw:nf:")))
@@ -49,20 +47,8 @@ So long lives this, and this gives life to thee.";
 			exit(EXIT_SUCCESS);
 			break;
 		case 'w':
-			width = atoi(optarg);
-			// /* saturate */
-			// if (width < W_MIN)
-			// {
-			// 	width = W_MIN;
-			// }
-			// else if (width > W_MAX)
-			// {
-			// 	width = W_MAX;
-			// }
-			// else
-			// {
-			// 	/* nothing */
-			// }
+			char *endptr;
+			width = strtoull(optarg, &endptr, 10);
 			break;
 		case 'n':
 			opt = 1;
@@ -111,10 +97,9 @@ So long lives this, and this gives life to thee.";
 		fclose(infile);
 	}
 
-	printf("%s\n\n", in_text);
+	// printf("%s\n\n", in_text); // just for demonstration
 
-	out_buf_size = strlen(in_text);
-	out_buf_size += out_buf_size / width + 1; /* */
+	out_buf_size = strlen(in_text) * 2 + 1; /* rough estimation */
 
 	char *out_text = (char *)calloc(out_buf_size, sizeof(char));
 	if (NULL == out_text)
@@ -125,7 +110,7 @@ So long lives this, and this gives life to thee.";
 
 	word_wrap(in_text, out_text, width, opt);
 
-	printf("%s\n\n", out_text);
+	printf("%s", out_text);
 
 	/* TEST PART */
 	size_t ar_input[256] = {
@@ -140,7 +125,7 @@ So long lives this, and this gives life to thee.";
 
 	calc_stat(out_text, ar_output);
 
-	puts("Assert that input content equals to output one (ignoring '\\n' character).");
+	// puts("Assert that input content equals to output one (ignoring '\\n' character).");  // just for demonstration
 	for (size_t i = 0; i < 10; i++)
 	{
 		// printf("%3zu %7zu %7zu %s\n", i, ar_input[i], ar_output[i], ar_input[i] != ar_output[i] ? "<---!!!" : "");
@@ -161,9 +146,9 @@ So long lives this, and this gives life to thee.";
 	return (0);
 }
 
-void word_wrap(char *input, char *output, const unsigned int width, const int option)
+void word_wrap(char *input, char *output, const size_t width, const int option)
 {
-	unsigned int line_length = 0u;
+	size_t line_length = 0u;
 	char *line_start = input;
 
 	do
